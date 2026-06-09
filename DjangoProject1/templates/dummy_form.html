@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="{% url 'torvu:dummy_form' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="photo_name" required>
+    <textarea name="photo_description" required> </textarea>
+    <input
+            type="file"
+            name="image"
+            accept="image/*"
+            required
+        >
+    <button type="submit"> Submit</button>
+
+</form>
+
+</body>
+</html>
