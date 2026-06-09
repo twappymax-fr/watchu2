@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,13 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%gbx1#4r&etfzk#@ndz*5l$rrjkm5m_pqo=_36+n!j2!qfg+^!'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', default=0)
+print(f"this is the current debug value: {DEBUG}")
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "127.0.0.1").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', "https.env.local://127.0.0.1").split(",")
+print(f"this is the current csrf value: {CSRF_TRUSTED_ORIGINS}")
 
 # Application definition
 
@@ -85,11 +89,11 @@ WSGI_APPLICATION = 'watchu.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ['POSTGRES_DB'],
-        "USER": os.environ['POSTGRES_USER'],
-        "PASSWORD": os.environ['POSTGRES_PASSWORD'],
-        "HOST":os.environ['DB_HOST'],
-        "PORT": os.environ['DB_PORT'],
+        "NAME": os.getenv('POSTGRES_DB'),
+        "USER": os.getenv('POSTGRES_USER'),
+        "PASSWORD": os.getenv('POSTGRES_PASSWORD'),
+        "HOST":os.getenv('DB_HOST'),
+        "PORT": os.getenv('DB_PORT'),
     }
 }
 
@@ -129,7 +133,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static/']
-STATIC_ROOT = "/vol/web/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 #  Media URLs
 
