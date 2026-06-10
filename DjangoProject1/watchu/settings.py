@@ -30,6 +30,19 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', "http://127.0.0.1").split(",")
 print(f"this is the current csrf value: {CSRF_TRUSTED_ORIGINS}")
 
+# Added after enabling https
+
+SECURE_PROXY_SSL_HEADER = (
+    "HTTP_X_FORWARDED_PROTO",
+    "https",
+)
+
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
 # Application definition
 
 INSTALLED_APPS = [
