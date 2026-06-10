@@ -1,0 +1,77 @@
+# Python bytecode/cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Keep real local/prod env files out of git
+.env.local
+.env.prod
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Static/media files
+media/
+staticfiles/
+
+# If your static/ directory contains generated assets only, keep it ignored.
+# If it contains source/static app files, remove the next line.
+static/
+
+# Docker/runtime artifacts
+*.pid
+*.sock
+docker-compose.override.yml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE/editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test/cache/coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.cache/
+
+# Build/package artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs
+logs/
+*.log
+
+# Secrets/certificates
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Backup files
+*.bak
+*.backup
+*.tmp
