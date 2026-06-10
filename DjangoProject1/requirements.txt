@@ -5,5 +5,6 @@ sqlparse==0.5.5
 typing_extensions==4.15.0
 tzdata==2026.2
 psycopg[binary]
-gunicorn==23.0.0
+gunicorn
 python-dotenv
+

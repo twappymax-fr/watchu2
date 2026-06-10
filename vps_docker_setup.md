@@ -59,9 +59,19 @@ SECRET_KEY=your-secret-key
 ## 7. Firewall setup
 ```bash
 ufw allow OpenSSH
-ufw allow 80
-ufw allow 443
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+sudo ufw reload
 ufw enable
+
+````
+## Verify:
+
+```bash
+sudo ufw status
+```
+
 ```
 
 ## 8. Fix permissions

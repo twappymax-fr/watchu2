@@ -16,7 +16,7 @@ db.sqlite3-journal
 
 # Keep real local/prod env files out of git
 .env.local
-.env.prod
+.env
 
 # Virtual environments
 venv/
