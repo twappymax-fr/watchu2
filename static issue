@@ -1,0 +1,33 @@
+⚠️ Problem: static path mismatch
+
+You have:
+
+alias /static/;
+
+But Docker mounts:
+
+- ./static:/static:ro
+
+AND Django uses:
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+👉 So your real collected static files are NOT in /static/
+
+FIX
+
+Change nginx to:
+
+location /static/ {
+    alias /app/staticfiles/;
+}
+
+And update docker:
+
+- ./static:/app/staticfiles
+
+OR better:
+
+👉 mount STATIC_ROOT instead:
+
+- ./staticfiles:/app/staticfiles

@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', default=0)
+DEBUG = bool(os.getenv('DEBUG', False))
+
 print(f"this is the current debug value: {DEBUG}")
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "127.0.0.1").split(",")
@@ -37,8 +38,7 @@ SECURE_PROXY_SSL_HEADER = (
     "https",
 )
 
-SECURE_SSL_REDIRECT = True
-
+SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "False") == "True"
 SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True
@@ -54,10 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'torvu',
     # Django-SEO
+    'django.contrib.sitemaps'
 
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

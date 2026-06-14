@@ -8,6 +8,9 @@ class my_photos(models.Model):
     image = models.ImageField(upload_to='images/')
     created = models.DateTimeField(auto_now_add=True)
 
+    def get_absolute_url(self):
+        return f"photos/{self.photo_name}"
+
     def __str__(self):
         return self.photo_name
 
