@@ -25,12 +25,11 @@ env/
 ENV/
 
 # Static/media files
-media/
-staticfiles/
+
 
 # If your static/ directory contains generated assets only, keep it ignored.
 # If it contains source/static app files, remove the next line.
-static/
+
 
 # Docker/runtime artifacts
 *.pid

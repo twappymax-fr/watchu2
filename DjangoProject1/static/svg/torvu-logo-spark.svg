@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="17.04 0 224.7 111" style="max-height: 500px" width="224.7" height="111">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&amp;display=swap');
+    </style>
+  </defs>
+
+  <path fill="#c0392b" d="M46 110 Q16 88 20 54 Q26 28 42 10 Q39 36 52 44 Q47 20 66 0 Q69 32 82 44 Q96 58 88 80 Q80 100 46 110 Z"/>
+  <path fill="#f58074" d="M46 110 Q24 94 27 70 Q32 52 43 44 Q40 62 53 65 Q58 46 68 33 Q71 56 76 68 Q81 86 46 110 Z"/>
+
+  <text letter-spacing="-1.5" fill="#1a1a1a" font-weight="600" font-size="52" font-family="'Space Grotesk', sans-serif" y="72" x="108">Torvu</text>
+</svg>
