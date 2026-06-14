@@ -1,0 +1,162 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block title %}Page Not Found – Torvu{% endblock %}
+
+{% block extra_css %}
+<style>
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .torvu-404-wrap {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+  .big-404 {
+    font-size: 120px;
+    font-weight: 500;
+    line-height: 1;
+    color: #c56b62;
+    letter-spacing: -4px;
+    animation: fadeIn 0.6s ease both;
+  }
+  .lost-icon {
+    font-size: 64px;
+    animation: float 3s ease-in-out infinite;
+    display: block;
+    margin: 0.5rem 0;
+    color: #c56b62;
+  }
+  .torvu-404-headline {
+    font-size: 28px;
+    font-weight: 500;
+    margin: 1rem 0 0.5rem;
+    animation: fadeIn 0.6s 0.1s ease both;
+    animation-fill-mode: both;
+  }
+  .torvu-404-sub {
+    font-size: 16px;
+    color: #666;
+    max-width: 480px;
+    line-height: 1.7;
+    margin: 0 auto 2rem;
+    animation: fadeIn 0.6s 0.2s ease both;
+    animation-fill-mode: both;
+  }
+  .torvu-404-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    animation: fadeIn 0.6s 0.3s ease both;
+    animation-fill-mode: both;
+  }
+  .torvu-404-btns .btn-primary-404 {
+    background: #c56b62;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s;
+  }
+  .torvu-404-btns .btn-primary-404:hover { background: #b05a52; }
+  .torvu-404-btns .btn-outline-404 {
+    background: transparent;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s;
+  }
+  .torvu-404-btns .btn-outline-404:hover { background: #f5f5f5; }
+  .torvu-404-divider {
+    width: 48px;
+    height: 2px;
+    background: #c56b62;
+    border-radius: 2px;
+    margin: 2rem auto;
+    opacity: 0.35;
+  }
+  .torvu-404-tip {
+    background: #fdf8f7;
+    border: 1px solid #f0e0de;
+    border-left: 3px solid #c56b62;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: left;
+    animation: fadeIn 0.6s 0.4s ease both;
+    animation-fill-mode: both;
+  }
+  .torvu-404-tip-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #c56b62;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .torvu-404-tip-label .spin-cog {
+    display: inline-block;
+    animation: spin 4s linear infinite;
+    margin-right: 4px;
+  }
+  .torvu-404-tip p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="torvu-404-wrap">
+  <span class="lost-icon" aria-hidden="true">&#x1F4CC;</span>
+
+  <div class="big-404">404</div>
+
+  <h1 class="torvu-404-headline">This page is between jobs.</h1>
+  <p class="torvu-404-sub">
+    Even our best career coaches couldn't track it down. The page you're looking for may have moved,
+    been renamed, or decided to take an unannounced career break.
+  </p>
+
+  <div class="torvu-404-btns">
+    <a class="btn-primary-404" href="{% url 'torvu:home' %}">&#8962; Back to home</a>
+    <a class="btn-outline-404" href="{% url 'torvu:stay_informed' %}">&#128214; Learn Something</a>
+    <a class="btn-outline-404" href="{% url 'torvu:request_assistance_form' %}">&#9993; Request assistance</a>
+  </div>
+
+  <div class="torvu-404-divider"></div>
+
+  <div class="torvu-404-tip">
+    <div class="torvu-404-tip-label">
+      <span class="spin-cog" aria-hidden="true">&#9881;</span> Career tip while you're here
+    </div>
+    <p>
+      If a page goes missing, the best move is <strong>don't panic — regroup and try a new path.</strong>
+      Same advice applies to job seekers. We're here to help with both.
+    </p>
+  </div>
+</div>
+{% endblock %}
