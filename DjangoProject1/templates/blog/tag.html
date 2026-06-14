@@ -1,0 +1,181 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block title %}{{ tag.name }} — Torvu{% endblock %}
+
+{% block content %}
+
+  <!-- HEADER -->
+  <section class="intro-section">
+    <div class="section-tag">Tag</div>
+    <h2 class="section-h2">{{ tag.name }}</h2>
+    <p style="color:var(--gray-700); margin-bottom:48px">
+      {{ posts.count }} post{{ posts.count|pluralize }} filed under this tag.
+    </p>
+
+    {% if posts %}
+      <div class="tag-grid">
+        {% for post in posts %}
+          <a class="feat-card" href="{% url 'blog:post' post.slug %}">
+
+            {% if post.hero_image %}
+              <img
+                class="feat-card__img"
+                src="{{ post.hero_image.url }}"
+                alt="{{ post.hero_alt|default:post.title }}"
+                loading="lazy"
+              >
+            {% endif %}
+
+            <div class="feat-card__base">
+              <div class="feat-card__tag">{{ post.category }}</div>
+              <div class="feat-card__title">{{ post.title }}</div>
+            </div>
+
+            <div class="feat-card__overlay">
+              <div class="feat-card__overlay-tag">{{ post.category }}</div>
+              <div class="feat-card__overlay-title">{{ post.title }}</div>
+              {% if post.excerpt %}
+                <div class="feat-card__overlay-desc">{{ post.excerpt }}</div>
+              {% endif %}
+              <div class="blog-hero-byline" style="margin-bottom:14px">
+                <strong style="color:rgba(255,255,255,.85)">
+                  {{ post.author.get_full_name|default:post.author.username }}
+                </strong>
+                <span class="byline-dot"></span>
+                <span>{{ post.published_at|date:"F Y" }}</span>
+                <span class="byline-dot"></span>
+                <span>{{ post.read_time }} min read</span>
+              </div>
+              <span class="btn-read-more">Read More <span class="arrow">&#8594;</span></span>
+            </div>
+
+          </a>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <p style="color:var(--gray-400); padding: 48px 0">
+        No published posts under this tag yet.
+      </p>
+    {% endif %}
+
+  </section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .tag-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-bottom: 80px;
+  }
+
+  @media(min-width: 640px) {
+    .tag-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media(min-width: 1024px) {
+    .tag-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Reuse feat-card styles from post.html */
+  .feat-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+    background: #1a1917;
+    text-decoration: none;
+    display: block;
+  }
+
+  .feat-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .feat-card:hover .feat-card__img { transform: scale(1.06); }
+
+  .feat-card__base {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 40px 18px 18px;
+    background: linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .feat-card__tag {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .feat-card__title {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .feat-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20,18,16,.88);
+    opacity: 0;
+    transition: opacity .3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px 18px;
+    pointer-events: none;
+  }
+
+  .feat-card:hover .feat-card__overlay,
+  .feat-card:focus-within .feat-card__overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feat-card__overlay-tag {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .feat-card__overlay-title {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .feat-card__overlay-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+
+  .byline-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.3);
+    flex-shrink: 0;
+    display: inline-block;
+  }
+</style>
+{% endblock %}

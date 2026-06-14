@@ -1,0 +1,354 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block title %}When the Floods Came — Torvu{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+  {% for blog in blogs %}
+      <a href="{% url 'torvu:post' blog.slug %}"> 
+
+    <h2>{{ blog.title }}</h2>
+    </a>
+  {% endfor %}
+
+  <!-- BLOG HERO -->
+  <div class="blog-hero">
+    <!-- <div class="blog-hero-img">
+    </div> -->
+    <img src="{% static 'img/five.avif' %}" alt="Amara tending her restored flood-resilient farm" class="blog-hero-img"> 
+    <div class="blog-hero-overlay"></div>
+    <div class="blog-hero-meta">
+      <span class="blog-hero-tag">Climate &amp; Livelihoods</span>
+      <h1 class="blog-hero-title">When the Floods Came:<br>Adapting Livelihoods to a&nbsp;Changing Climate</h1>
+      <div class="blog-hero-byline">
+        <strong>Miriam Odhiambo</strong>
+        <span class="byline-dot"></span>
+        <span>Field Correspondent, Torvu Tanzania</span>
+        <span class="byline-dot"></span>
+        <span>June 2026</span>
+        <span class="byline-dot"></span>
+        <span>8 min read</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE BODY + SOCIAL ASIDE -->
+  <div class="article-wrap">
+    <article class="article-body">
+
+      <div class="prose">
+
+        <p>
+          In the low-lying delta villages of Rufiji, the rains no longer arrive on schedule. For Amara Mwalimu, a 
+          smallholder farmer who has tended the same plot of land for twenty years, the change has been impossible 
+          to ignore. <strong>Three floods in four years</strong> have inundated her maize fields, washed away months 
+          of labour, and pushed her family to the edge of a crisis that no single harvest could fix.
+        </p>
+
+        <p>
+          Climate change hits hardest those who contributed least to it. In sub-Saharan Africa, where agriculture 
+          employs the majority of the rural poor and rainfall patterns are shifting with little warning, the 
+          consequences are not abstract — they are counted in lost harvests, withdrawn children from school, 
+          and empty plates.
+        </p>
+
+      </div><!-- /.prose -->
+
+      <!-- INLINE IMAGE 1 -->
+      <div class="article-img-wrap">
+        <div class="article-img-ph feat-ph1">
+          <!-- <img src="{% static 'img/blog-amara-field.avif' %}" alt="Amara in her flood-resilient raised-bed garden"> -->
+        </div>
+        <p class="article-img-caption">Amara Mwalimu on her land in Rufiji delta, now partially converted to raised-bed vegetable plots that survive seasonal flooding. Photo: Torvu / Miriam Odhiambo, 2026.</p>
+      </div>
+
+      <div class="prose">
+
+        <h3>The Season Everything Changed</h3>
+
+        <p>
+          It was March 2023 when the water came for the third time. Amara had already planted — maize, beans, a 
+          small patch of cassava — and the seedlings were just beginning to show. Within two days, the fields 
+          were under half a metre of brown water. <strong>She lost everything she had planted.</strong>
+        </p>
+
+        <p>
+          What followed was a period of extraordinary difficulty. Her husband took on casual labour in Dar es 
+          Salaam. Her eldest daughter was pulled from secondary school for a term. The family borrowed from 
+          neighbours to eat. "I felt like I was farming the same land my mother farmed," Amara told us, "but 
+          the land had become something else. Something I didn't recognise."
+        </p>
+
+      </div>
+
+      <!-- BLOCKQUOTE 1 -->
+      <blockquote class="article-blockquote">
+        <p>The land used to speak to us. We knew what it needed. Now it does things we have never seen before, and we are learning its language all over again.</p>
+        <cite><strong>Amara Mwalimu</strong>, smallholder farmer, Rufiji, Tanzania</cite>
+      </blockquote>
+
+      <div class="prose">
+
+        <h3>Torvu's Climate-Resilient Agriculture Programme</h3>
+
+        <p>
+          In late 2023, Torvu's Tanzania field office began piloting a climate-resilient agriculture programme 
+          across twelve villages in the Rufiji delta. The intervention was designed not as a one-off handout but 
+          as a <strong>multi-season transformation of farming practice</strong> — combining raised-bed construction, 
+          flood-tolerant seed varieties, group savings schemes, and real-time weather alerts delivered via 
+          community radio and SMS.
+        </p>
+
+        <p>
+          Amara was among the first forty households enrolled. The process began not with seeds or tools, but with 
+          a community mapping exercise — a three-day workshop where farmers, extension workers, and local elders 
+          charted which plots flooded first, which slopes drained fastest, and where water had historically pooled. 
+          "We already knew all this," said one village elder. "But nobody had ever asked us to write it down."
+        </p>
+
+      </div>
+
+      <!-- PULL STAT -->
+      <div class="article-pull-stat">
+        <div class="pull-stat-num">3×</div>
+        <div class="pull-stat-text">
+          <strong>Yield increase in the first full harvest cycle</strong>
+          Programme participants using raised-bed flood-tolerant systems saw median yields triple compared to the same households' pre-programme baselines.
+        </div>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          The technical training covered raised-bed construction — mounding earth above flood level, reinforced 
+          with bamboo stakes and vetiver grass to prevent erosion — and the introduction of flood-tolerant 
+          varieties of rice and leafy vegetables sourced through Torvu's agricultural supply chain. Crucially, 
+          the programme also worked with the local SACCOS (savings and credit cooperatives) to provide 
+          short-term seasonal loans, so that farmers who suffered partial losses could replant quickly without 
+          falling into debt spirals with informal lenders.
+        </p>
+
+      </div>
+
+      <!-- TWO-UP IMAGES -->
+      <div class="article-img-duo">
+        <div class="article-img-ph feat-ph6" style="border-radius:var(--radius-lg)">
+          <!-- <img src="{% static 'img/blog-raised-bed.avif' %}" alt="Raised-bed garden construction"> -->
+        </div>
+        <div class="article-img-ph feat-ph2" style="border-radius:var(--radius-lg)">
+          <!-- <img src="{% static 'img/blog-seed-exchange.avif' %}" alt="Flood-tolerant seed exchange session"> -->
+        </div>
+      </div>
+      <p class="article-img-caption" style="margin-top:-20px; margin-bottom:36px">Left: Raised-bed construction in progress. Right: Community seed exchange — a cornerstone of the programme's knowledge-sharing model.</p>
+
+      <div class="prose">
+
+        <h3>More Than a Farming Programme</h3>
+
+        <p>
+          What quickly became clear to the field team was that flood resilience is inseparable from financial 
+          resilience. A family that can survive one bad season without crisis — because they have savings, because 
+          they have diversified income, because their children stay in school — is a family that can invest in 
+          next season. Torvu extended the programme to include a dedicated <strong>women's enterprise track</strong>, 
+          supporting participants to start or grow small businesses — from charcoal production to dried fish 
+          trading — that would generate income during the months when farming is disrupted.
+        </p>
+
+        <p>
+          Amara now runs a small vegetable stall at the district market. Her raised beds produce amaranth, 
+          tomatoes, and onions through the wet season when her neighbours' fields are inundated. She has 
+          trained three other women in her village to build their own beds. Her daughter is back in school.
+        </p>
+
+      </div>
+
+      <!-- BLOCKQUOTE 2 -->
+      <blockquote class="article-blockquote">
+        <p>My grandmother farmed this same land. I want my daughter to farm it too. But she has to farm it differently than I did — smarter, more careful. The programme taught us that this is not giving up. It is adapting.</p>
+        <cite><strong>Amara Mwalimu</strong></cite>
+      </blockquote>
+
+      <!-- INLINE IMAGE 2 -->
+      <div class="article-img-wrap">
+        <div class="article-img-ph feat-ph3">
+          <!-- <img src="{% static 'img/blog-women-group.avif' %}" alt="Women's enterprise training group session"> -->
+        </div>
+        <p class="article-img-caption">Women's enterprise training session, Rufiji district. Forty-three women completed the 2024–25 cohort, of whom 38 reported sustained secondary income six months after graduation.</p>
+      </div>
+
+      <div class="prose">
+
+        <h3>What the Numbers Show</h3>
+
+        <p>
+          Twelve months into the programme, Torvu's monitoring team surveyed all forty households in the 
+          pilot cohort. The results were striking. <strong>Median annual household income had increased by 
+          41%</strong>, driven primarily by vegetable sales and the women's enterprise track. Child school 
+          dropout rates in programme households fell from 22% to 3% over the pilot period. Every household 
+          reported completing their seasonal planting on time, compared to just over half the previous year.
+        </p>
+
+        <p>
+          The programme is now being expanded to sixty additional villages across Rufiji and the neighbouring 
+          Kilwa district, with support from Torvu's climate resilience fund and co-financing from the European 
+          Union. A formal randomised evaluation will begin in 2027 to assess long-term impact.
+        </p>
+
+        <p>
+          Back on her plot, Amara is harvesting the second crop from beds she built herself, with her own hands, 
+          from soil she knows. The floods have not stopped. But she has stopped being stopped by them.
+        </p>
+
+      </div>
+
+      <!-- TAGS -->
+      <div class="article-tags">
+        <a class="article-tag-chip" href="#">Climate resilience</a>
+        <a class="article-tag-chip" href="#">Tanzania</a>
+        <a class="article-tag-chip" href="#">Livelihoods</a>
+        <a class="article-tag-chip" href="#">Women's enterprise</a>
+        <a class="article-tag-chip" href="#">Agriculture</a>
+        <a class="article-tag-chip" href="#">Impact stories</a>
+      </div>
+
+      <!-- SHARE ROW (mobile only) -->
+      <div class="article-share-row">
+        <span class="article-share-label">Share</span>
+        <a class="aside-icon" href="#" aria-label="Share on X">𝕏</a>
+        <a class="aside-icon" href="#" aria-label="Share on LinkedIn">in</a>
+        <a class="aside-icon" href="#" aria-label="Share on Facebook">f</a>
+        <a class="aside-icon" href="#" aria-label="Copy link">🔗</a>
+      </div>
+
+    </article>
+
+    <!-- SOCIAL ASIDE (desktop, reuses main.css classes) -->
+    <aside class="social-aside">
+      <span class="aside-label">Share</span>
+      <a class="aside-icon" href="#" aria-label="Share on X">𝕏</a>
+      <a class="aside-icon" href="#" aria-label="Share on LinkedIn">in</a>
+      <a class="aside-icon" href="#" aria-label="Share on Facebook">f</a>
+      <div class="aside-divider"></div>
+      <a class="aside-icon" href="#" aria-label="Copy link" title="Copy link">🔗</a>
+    </aside>
+
+  </div><!-- /.article-wrap -->
+
+  <!-- FEATURED STORIES -->
+  <section class="featured-section">
+    <div class="section-tag">More stories</div>
+    <h2 class="section-h2">From the field</h2>
+
+    <div class="featured-grid">
+
+      <!-- Card 1 -->
+      <div class="feat-card">
+        <div class="feat-card-img feat-ph2">
+          <!-- <img src="{% static 'img/story-microfinance.avif' %}" alt="Microfinance story"> -->
+        </div>
+        <div class="feat-card-base">
+          <div class="feat-card-tag">Financial inclusion</div>
+          <div class="feat-card-title">One loan, one year: how Fatuma rebuilt her family's future</div>
+        </div>
+        <div class="feat-overlay">
+          <div class="feat-overlay-tag">Financial inclusion</div>
+          <div class="feat-overlay-title">One loan, one year: how Fatuma rebuilt her family's future</div>
+          <div class="feat-overlay-desc">A microfinance loan of $120 and six months of business coaching. This is what it took to change the trajectory of one family in Mwanza, Tanzania.</div>
+          <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feat-card">
+        <div class="feat-card-img feat-ph4">
+          <img src="{% static 'img/five.avif' %}" alt="Education story">
+        </div>
+        <div class="feat-card-base">
+          <div class="feat-card-tag">Education</div>
+          <div class="feat-card-title">The school that survived three floods — and kept its students</div>
+        </div>
+        <div class="feat-overlay">
+          <div class="feat-overlay-tag">Education</div>
+          <div class="feat-overlay-title">The school that survived three floods — and kept its students</div>
+          <div class="feat-overlay-desc">In Sylhet, Torvu's flood-proof school model has meant that not a single child was forced to drop out across four wet seasons. A report from the ground.</div>
+          <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feat-card">
+        <div class="feat-card-img feat-ph1">
+          <!-- <img src="{% static 'img/story-health.avif' %}" alt="Healthcare story"> -->
+        </div>
+        <div class="feat-card-base">
+          <div class="feat-card-tag">Healthcare</div>
+          <div class="feat-card-title">From the last mile: bringing maternal care to remote communities</div>
+        </div>
+        <div class="feat-overlay">
+          <div class="feat-overlay-tag">Healthcare</div>
+          <div class="feat-overlay-title">From the last mile: bringing maternal care to remote communities</div>
+          <div class="feat-overlay-desc">Torvu's community health worker model has reduced maternal mortality in three districts by nearly a third — without a single new hospital being built.</div>
+          <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feat-card">
+        <div class="feat-card-img feat-ph5">
+          <!-- <img src="{% static 'img/story-enterprise.avif' %}" alt="Social enterprise story"> -->
+        </div>
+        <div class="feat-card-base">
+          <div class="feat-card-tag">Social enterprise</div>
+          <div class="feat-card-title">Profit for good: how Torvu's model funds its own mission</div>
+        </div>
+        <div class="feat-overlay">
+          <div class="feat-overlay-tag">Social enterprise</div>
+          <div class="feat-overlay-title">Profit for good: how Torvu's model funds its own mission</div>
+          <div class="feat-overlay-desc">What if doing good and doing business are two sides of the same coin? Our Executive Director explores Torvu's self-sustaining development model.</div>
+          <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="feat-card">
+        <div class="feat-card-img feat-ph3">
+          <!-- <img src="{% static 'img/story-youth.avif' %}" alt="Youth employment story"> -->
+        </div>
+        <div class="feat-card-base">
+          <div class="feat-card-tag">Youth &amp; employment</div>
+          <div class="feat-card-title">Beyond school walls: apprenticeships that actually lead to jobs</div>
+        </div>
+        <div class="feat-overlay">
+          <div class="feat-overlay-tag">Youth &amp; employment</div>
+          <div class="feat-overlay-title">Beyond school walls: apprenticeships that actually lead to jobs</div>
+          <div class="feat-overlay-desc">Torvu's vocational pathway programme in Uganda has placed over 4,000 young people in formal employment since 2022 — 64% of them women.</div>
+          <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="feat-card">
+        <div class="feat-card-img feat-ph6">
+          <!-- <img src="{% static 'img/story-community.avif' %}" alt="Community voice story"> -->
+        </div>
+        <div class="feat-card-base">
+          <div class="feat-card-tag">Community voice</div>
+          <div class="feat-card-title">Who decides? Putting communities at the centre of development</div>
+        </div>
+        <div class="feat-overlay">
+          <div class="feat-overlay-tag">Community voice</div>
+          <div class="feat-overlay-title">Who decides? Putting communities at the centre of development</div>
+          <div class="feat-overlay-desc">Torvu's participatory planning model transfers decision-making power to the communities it serves. This is why that matters — and how it works in practice.</div>
+          <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Torvu{% endblock %}</title>
+  <link rel="icon" href="{% static 'svg/torvu-spark-icon.svg' %}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+  {% include "common/navigation.html" %}
+  
+  {% block content %}{% endblock %}
+  <div  style="position: relative; padding:0; margin:0"> 
+
+ 
+ <br> <br> <br>
+
+
+        {% include "common/curve.html" %}
+</div>
+  {% include "common/footer.html" %}
+          
+
+
+
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,679 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} — Torvu{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* ════════════════════════════════════════════
+     BLOG HERO
+  ════════════════════════════════════════════ */
+  .blog-hero {
+    position: relative;
+    height: clamp(340px, 55vw, 640px);
+    overflow: hidden;
+    background: #0d1f16; /* fallback when no hero image */
+  }
+
+  .blog-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .blog-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,.08) 20%, rgba(0,0,0,.74) 100%);
+  }
+
+  .blog-hero-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: clamp(24px, 5vw, 52px) var(--px) clamp(32px, 6vw, 60px);
+    max-width: 900px;
+  }
+
+  .blog-hero-tag {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--red);
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(192,57,43,.5);
+    border-radius: 999px;
+    padding: 4px 13px;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .blog-hero-title {
+    font-family: var(--serif);
+    font-size: clamp(26px, 5vw, 50px);
+    color: var(--white);
+    line-height: 1.12;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .blog-hero-byline {
+    font-size: 14px;
+    color: rgba(255,255,255,.58);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .blog-hero-byline strong {
+    color: rgba(255,255,255,.85);
+    font-weight: 500;
+  }
+
+  .byline-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.3);
+    flex-shrink: 0;
+  }
+
+  /* ════════════════════════════════════════════
+     ARTICLE SHELL
+  ════════════════════════════════════════════ */
+  .article-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media(min-width: 1024px) {
+    .article-wrap {
+      grid-template-columns: 1fr 56px;
+    }
+  }
+
+  .article-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 52px var(--px) 80px;
+    width: 100%;
+  }
+
+  /* ════════════════════════════════════════════
+     BLOCK: PARAGRAPH
+  ════════════════════════════════════════════ */
+  .block-paragraph {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--gray-700);
+    margin-bottom: 24px;
+  }
+
+  .block-paragraph strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Drop cap on the very first paragraph */
+  .block-paragraph--first::first-letter {
+    font-family: var(--serif);
+    font-size: 4.2em;
+    line-height: .75;
+    float: left;
+    margin: 6px 10px 0 0;
+    color: var(--text);
+  }
+
+  /* ════════════════════════════════════════════
+     BLOCK: HEADING (H3)
+  ════════════════════════════════════════════ */
+  .block-heading {
+    font-family: var(--serif);
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.25;
+    margin: 48px 0 16px;
+  }
+
+  /* Remove top margin when heading follows a heading */
+  .block-heading + .block-heading {
+    margin-top: 16px;
+  }
+
+  /* ════════════════════════════════════════════
+     BLOCK: BLOCKQUOTE
+  ════════════════════════════════════════════ */
+  .block-blockquote {
+    margin: 44px 0;
+    padding: 32px 36px;
+    border-left: 4px solid var(--red);
+    background: var(--gray-100);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    position: relative;
+  }
+
+  .block-blockquote::before {
+    content: '\201C';
+    font-family: var(--serif);
+    font-size: 80px;
+    color: var(--red);
+    line-height: .6;
+    position: absolute;
+    top: 22px;
+    left: 28px;
+    opacity: .2;
+    pointer-events: none;
+  }
+
+  .block-blockquote p {
+    font-family: var(--serif);
+    font-size: clamp(17px, 2.5vw, 21px);
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .block-blockquote cite {
+    font-size: 14px;
+    color: var(--gray-400);
+    font-style: normal;
+  }
+
+  .block-blockquote cite strong {
+    color: var(--gray-700);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════
+     BLOCK: IMAGE (single)
+  ════════════════════════════════════════════ */
+  .block-image {
+    margin: 40px 0;
+  }
+
+  .block-image__img {
+    width: 100%;
+    height: clamp(220px, 40vw, 420px);
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Bleed slightly on larger screens for visual rhythm */
+  @media(min-width: 640px) {
+    .block-image {
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+
+    .block-image__img {
+      border-radius: var(--radius-lg);
+    }
+  }
+
+  .block-image__caption {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 10px;
+    padding: 0 4px;
+    line-height: 1.55;
+  }
+
+  /* ════════════════════════════════════════════
+     BLOCK: IMAGE DUO (2-up)
+  ════════════════════════════════════════════ */
+  .block-image-duo {
+    margin: 40px 0;
+  }
+
+  .block-image-duo__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .block-image-duo__img {
+    width: 100%;
+    height: clamp(160px, 28vw, 300px);
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-lg);
+  }
+
+  .block-image-duo__caption {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 10px;
+    padding: 0 4px;
+    line-height: 1.55;
+  }
+
+  /* ════════════════════════════════════════════
+     BLOCK: PULL STAT
+  ════════════════════════════════════════════ */
+  .block-pull-stat {
+    margin: 48px 0;
+    padding: 36px 32px;
+    background: #141210;
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .block-pull-stat__num {
+    font-family: var(--serif);
+    font-size: clamp(42px, 8vw, 64px);
+    color: var(--red);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .block-pull-stat__body {
+    font-size: 16px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.65;
+  }
+
+  .block-pull-stat__body strong {
+    display: block;
+    color: var(--white);
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  /* ════════════════════════════════════════════
+     ARTICLE FOOTER: TAGS + SHARE
+  ════════════════════════════════════════════ */
+
+
+  .article-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .article-tag-chip {
+    font-size: 12px;
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+    border-radius: 999px;
+    padding: 5px 14px;
+    text-decoration: none;
+    transition: border-color .15s, color .15s;
+  }
+
+  .article-tag-chip:hover {
+    border-color: var(--gray-700);
+    color: var(--text);
+  }
+
+  /* Mobile share row (hidden on desktop — use .social-aside) */
+  .article-share-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .article-share-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+  }
+
+  @media(min-width: 1024px) {
+    .article-share-row {
+      display: none;
+    }
+  }
+
+  /* ════════════════════════════════════════════
+     SOCIAL ASIDE (desktop sticky)
+     Reuses .social-aside, .aside-label,
+     .aside-icon, .aside-divider from main.css
+  ════════════════════════════════════════════ */
+
+  /* ════════════════════════════════════════════
+     FEATURED STORIES
+  ════════════════════════════════════════════ */
+  .featured-section {
+    padding: 72px var(--px);
+    background: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  @media(min-width: 640px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media(min-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .feat-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+    background: #1a1917; /* fallback */
+    text-decoration: none;
+    display: block;
+  }
+
+  .feat-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .feat-card:hover .feat-card__img {
+    transform: scale(1.06);
+  }
+
+  /* Always-visible bottom gradient + label */
+  .feat-card__base {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 18px 18px;
+    background: linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .feat-card__tag {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .feat-card__title {
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* Hover overlay */
+  .feat-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20,18,16,.88);
+    opacity: 0;
+    transition: opacity .3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px 18px;
+    pointer-events: none;
+  }
+
+  .feat-card:hover .feat-card__overlay,
+  .feat-card:focus-within .feat-card__overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feat-card__overlay-tag {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .feat-card__overlay-title {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .feat-card__overlay-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="blog-hero">
+  {% if post.hero_image %}
+    <img class="blog-hero-img" src="{{ post.hero_image.url }}" alt="{{ post.hero_alt|default:post.title }}">
+  {% endif %}
+  <div class="blog-hero-overlay"></div>
+  <div class="blog-hero-meta">
+    <span class="blog-hero-tag">{{ post.category }}</span>
+    <h1 class="blog-hero-title">{{ post.title }}</h1>
+    <div class="blog-hero-byline">
+      <strong>{{ post.author }}</strong>
+      {% if post.author_role %}
+        <span class="byline-dot"></span>
+        <span>{{ post.author_role }}</span>
+      {% endif %}
+      {% if post.created_at %}
+        <span class="byline-dot"></span>
+        <span>{{ post.created_at|date:"F Y" }}</span>
+      {% endif %}
+      <span class="byline-dot"></span>
+      <span>{{ post.read_time }} min read</span>
+    </div>
+  </div>
+</div>
+
+
+
+   <!-- ARTICLE + SOCIAL ASIDE -->
+
+<div class="article-wrap">
+
+  <article class="article-body">
+
+    <!-- CONTENT BLOCKS -->
+    {% for block in post.blocks.all %}
+
+      {# PARAGRAPH #}
+      {% if block.block_type == 'paragraph' %}
+        <p class="block-paragraph{% if forloop.first %} block-paragraph--first{% endif %}">
+          {{ block.text|safe }}
+        </p>
+
+      {# HEADING #}
+      {% elif block.block_type == 'heading' %}
+        <h3 class="block-heading">{{ block.text }}</h3>
+
+      {# BLOCKQUOTE #}
+      {% elif block.block_type == 'blockquote' %}
+        <blockquote class="block-blockquote">
+          <p>{{ block.quote_text }}</p>
+            <cite>
+              <strong>{{ block.quote_attribution }}</strong>, {{ block.quote_attributor_role }}
+              
+            </cite>
+          
+      
+  </blockquote>
+
+      {# IMAGE — single #}
+      {% elif block.block_type == 'image' %}
+        {% if block.image %}
+          <figure class="block-image">
+            <img
+              class="block-image__img"
+              src="{{ block.image.url }}"
+              alt="{{ block.image_alt|default:'' }}"
+              loading="lazy"
+            >
+            {% if block.caption %}
+              <figcaption class="block-image__caption">{{ block.caption }}</figcaption>
+            {% endif %}
+          </figure>
+        {% endif %}
+
+      {# IMAGE DUO — 2-up #}
+      {% elif block.block_type == 'image_duo' %}
+        {% if block.image_left or block.image_right %}
+          <figure class="block-image-duo">
+            <div class="block-image-duo__grid">
+              {% if block.image_left %}
+                <img
+                  class="block-image-duo__img"
+                  src="{{ block.image_left.url }}"
+                  alt="{{ block.image_left_alt|default:'' }}"
+                  loading="lazy"
+                >
+              {% endif %}
+              {% if block.image_right %}
+                <img
+                  class="block-image-duo__img"
+                  src="{{ block.image_right.url }}"
+                  alt="{{ block.image_right_alt|default:'' }}"
+                  loading="lazy"
+                >
+              {% endif %}
+            </div>
+            {% if block.duo_caption %}
+              <figcaption class="block-image-duo__caption">{{ block.duo_caption }}</figcaption>
+            {% endif %}
+          </figure>
+        {% endif %}
+
+      {# PULL STAT #}
+      {% elif block.block_type == 'pull_stat' %}
+        <div class="block-pull-stat">
+          <div class="block-pull-stat__num">{{ block.stat_number }}</div>
+          <div class="block-pull-stat__body">
+            {% if block.stat_heading %}
+              <strong>{{ block.stat_heading }}</strong>
+            {% endif %}
+            {{ block.stat_body }}
+          </div>
+        </div>
+
+      {% endif %}
+    {% endfor %}
+    {# ── END BLOCKS ──────────────────────────── #}
+
+
+
+  </article>
+
+
+  {# ── SOCIAL ASIDE (desktop sticky) ──────────── #}
+  <aside class="social-aside" aria-label="Share this article">
+    <span class="aside-label">Share</span>
+    <a class="aside-icon"
+       href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title|urlencode }}"
+       target="_blank" rel="noopener" aria-label="Share on X">𝕏</a>
+    <a class="aside-icon"
+       href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+       target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+    <a class="aside-icon"
+       href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+       target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
+    <div class="aside-divider"></div>
+    <a class="aside-icon"
+       href="#" onclick="navigator.clipboard.writeText(window.location.href); return false;"
+       aria-label="Copy link" title="Copy link">🔗</a>
+  </aside>
+
+</div>{# /.article-wrap #}
+
+
+
+{% if featured %}
+<section class="featured-section">
+  <div class="section-tag">More stories</div>
+  <h2 class="section-h2">From the field</h2>
+
+  <div class="featured-grid">
+    {% for item in featured %}
+      <a class="feat-card" href="{% url 'torvu:post' item.slug %}">
+
+        {% if item.hero_image %}
+          <img
+            class="feat-card__img"
+            src="{{ item.hero_image.url }}"
+            alt="{{ item.hero_alt|default:item.title }}"
+            loading="lazy"
+          >
+        {% endif %}
+
+        {# Always-visible label strip #}
+        <div class="feat-card__base">
+          <div class="feat-card__tag">{{ item.category }}</div>
+          <div class="feat-card__title">{{ item.title }}</div>
+        </div>
+
+        {# Hover overlay #}
+        <div class="feat-card__overlay">
+          <div class="feat-card__overlay-tag">{{ item.category }}</div>
+          <div class="feat-card__overlay-title">{{ item.title }}</div>
+          {% if item.excerpt %}
+            <div class="feat-card__overlay-desc">{{ item.excerpt }}</div>
+          {% endif %}
+          <span class="btn-read-more">Read More <span class="arrow">&#8594;</span></span>
+        </div>
+
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+
+{% include "common/contact.html" %}
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+  // Copy-link feedback: briefly swap the icon to a tick
+  document.querySelectorAll('[aria-label="Copy link"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const original = btn.textContent;
+      btn.textContent = '✓';
+      btn.style.color = 'var(--red)';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.color = '';
+      }, 1800);
+    });
+  });
+</script>
+{% endblock %}

@@ -1,1292 +1,79 @@
+{% extends "common/base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}Our Solutions Ecosystem – Torvu{% endblock %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Solutions Ecosystem – Torvu</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap"
-    rel="stylesheet">
+{% block nav_solutions_active %}active{% endblock %}
+{% block mobile_nav_solutions_active %}active{% endblock %}
+
+{% block extra_css %}
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
+    @keyframes slideDown {
+    from { transform: translateY(-200%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
     }
-
-    :root {
-      --red: #c0392b;
-      --red-dark: #96281b;
-      --white: #fff;
-      --gray-100: #f5f4f0;
-      --gray-200: #e8e6e0;
-      --gray-400: #a0998c;
-      --gray-700: #4a4740;
-      --text: #1a1917;
-      --serif: 'DM Serif Display', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
-      --radius: 10px;
-      --radius-lg: 16px;
-      --px: 20px;
+    #stipend-banner {
+      animation: slideDown 2.0s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-
-    @media(min-width:640px) {
-      :root {
-        --px: 32px
-      }
-    }
-
-    @media(min-width:1024px) {
-      :root {
-        --px: 48px
-      }
-    }
-
-    html {
-      scroll-behavior: smooth
-    }
-
-    body {
-      font-family: var(--sans);
-      color: var(--text);
-      background: var(--white);
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden
-    }
-
-    /* ── NAV ── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px var(--px);
-      background: var(--white);
-      border-bottom: 1px solid var(--gray-200);
-      position: sticky;
-      top: 0;
-      z-index: 200
-    }
-
-    .nav-logo {
-      font-family: var(--serif);
-      font-size: 22px;
-      color: var(--text);
-      letter-spacing: -0.5px;
-      text-decoration: none
-    }
-
-    .nav-logo em {
-      color: var(--red);
-      font-style: normal
-    }
-
-    .nav-links {
-      display: none;
-      gap: 24px
-    }
-
-    @media(min-width:900px) {
-      .nav-links {
-        display: flex
-      }
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      color: var(--gray-700);
-      text-decoration: none;
-      transition: color .15s
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text)
-    }
-
-    .nav-links a.active {
-      border-bottom: 2px solid var(--red);
-      padding-bottom: 2px
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 10px
-    }
-
-    .btn-request {
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius);
-      padding: 8px 18px;
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background .15s;
-      white-space: nowrap
-    }
-
-    .btn-request:hover {
-      background: var(--red-dark)
-    }
-
-    .hamburger {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px
-    }
-
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: all .25s
-    }
-
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg)
-    }
-
-    .hamburger.open span:nth-child(2) {
-      opacity: 0
-    }
-
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg)
-    }
-
-    @media(min-width:900px) {
-      .hamburger {
-        display: none
-      }
-    }
-
-    .mobile-menu {
-      display: none;
-      flex-direction: column;
-      background: var(--white);
-      border-bottom: 1px solid var(--gray-200)
-    }
-
-    .mobile-menu.open {
-      display: flex
-    }
-
-    .mobile-menu a {
-      font-size: 15px;
-      color: var(--gray-700);
-      text-decoration: none;
-      padding: 13px var(--px);
-      border-bottom: 1px solid var(--gray-100)
-    }
-
-    .mobile-menu a.active,
-    .mobile-menu a:hover {
-      color: var(--text);
-      background: var(--gray-100)
-    }
-
-    @media(min-width:900px) {
-      .mobile-menu {
-        display: none !important
-      }
-    }
-
-    /* ── HERO IMAGE ── */
-
-    .hero-wrap {
-      position: relative;
-      margin-bottom: 40px;
-    }
-
-    .hero-img-full {
-      /* min-height: 320px; */
-      height: 55vh;
-      max-height: 700px;
-
-      background: center center/cover no-repeat;
-    }
-
-    .hero-banner {
-      position: absolute;
-      margin: -4.25rem .875rem 0 .875rem;
-      left: 5%;
-      right: 5%;
-
-      background: #fff;
-      padding: 32px 24px;
-      border-radius: 20px 20px 0 0;
-
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    .hero-banner-title {
-      font-size: 30px;
-      line-height: 1.1;
-      text-transform: uppercase;
-    }
-
-    .hero-banner-sub {
-      margin-top: 16px;
-      font-size: clamp(1rem, 2vw, 1.5rem);
-      line-height: 1.4;
-      max-width: 800px;
-      margin-inline: auto;
-    }
-
-    .hero-img-full {
-      width: 100%;
-      height: clamp(280px, 55vw, 620px);
-      object-fit: cover;
-      display: block
-    }
-
-    /* fallback gradient when no real image */
-    .hero-img-full.placeholder {
-      background: url("https://dgikh81ssvyrj.cloudfront.net/media/images/BI_MF_Myanmar_clien.format-jpeg.width-600.avifquality-50.jpg") center/cover no-repeat;
-
-    }
-
-    @media (max-width:768px) {
-
-      .hero-wrap {
-        margin-bottom: 40px;
-      }
-
-      .hero-banner {
-        left: 16px;
-        right: 16px;
-
-        padding: 24px 18px;
-        border-radius: 16px 16px 0 0;
-      }
-
-    }
-
-    /* ── LAYOUT SHELL (aside + main) ── */
-    .page-body {
-      display: block;
-      position: relative
-    }
-
-    @media(min-width:1024px) {
-      .page-body {
-        display: grid;
-        grid-template-columns: 1fr 56px;
-        gap: 0
-      }
-
-      .page-main {
-        min-width: 0
-      }
-    }
-
-    /* ── SOCIAL ASIDE ── */
-    .social-aside {
-      display: none
-    }
-
-    @media(min-width:1024px) {
-      .social-aside {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 14px;
-        padding: 32px 0;
-        position: sticky;
-        top: 64px;
-        height: fit-content;
-        border-left: 1px solid var(--gray-200)
-      }
-
-      .aside-label {
-        font-size: 9px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--gray-400);
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        margin-bottom: 4px
-      }
-
-      .aside-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 1px solid var(--gray-200);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 13px;
-        color: var(--gray-700);
-        transition: border-color .15s, color .15s, background .15s;
-        text-decoration: none
-      }
-
-      .aside-icon:hover {
-        border-color: var(--red);
-        color: var(--red);
-        background: #fdf3f2
-      }
-
-      .aside-divider {
-        width: 1px;
-        height: 24px;
-        background: var(--gray-200)
-      }
-    }
-
-    /* ── SECTION 1: Three intro images + dummy text ── */
-    .intro-section {
-      padding: 72px var(--px) 0
-    }
-
-    .section-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--gray-400);
-      margin-bottom: 8px;
-      font-weight: 500
-    }
-
-    .section-h2 {
-      font-family: var(--serif);
-      font-size: clamp(24px, 4vw, 34px);
-      font-weight: 400;
-      margin-bottom: 12px;
-      line-height: 1.15
-    }
-
-    .intro-images {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-bottom: 36px
-    }
-
-    @media(min-width:640px) {
-      .intro-images {
-        grid-template-columns: repeat(3, 1fr)
-      }
-    }
-
-    .intro-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: var(--radius-lg);
-      display: block
-    }
-
-    .intro-img.ph {
-      border-radius: var(--radius-lg);
-      height: 200px
-    }
-
-    .ph1 {
-      background: linear-gradient(160deg, #2e5935, #1a3a20)
-    }
-
-    .ph2 {
-      background: linear-gradient(160deg, #5a3a28, #3a2218)
-    }
-
-    .ph3 {
-      background: linear-gradient(160deg, #213a52, #0f2233)
-    }
-
-    .intro-text {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      padding-bottom: 72px;
-      border-bottom: 1px solid var(--gray-200)
-    }
-
-    @media(min-width:768px) {
-      .intro-text {
-        grid-template-columns: 1fr 1fr
-      }
-    }
-
-    .intro-text p {
-      font-size: 16px;
-      color: var(--gray-700);
-      line-height: 1.8
-    }
-
-    .intro-text p strong {
-      color: var(--text);
-      font-weight: 500
-    }
-
-    /* ── SECTION 2: Stat cards with overlapping banners ── */
-    .stats-section {
-      padding: 80px var(--px);
-      background-image: linear-gradient(180deg, #f6f6f6 0%, rgba(246, 246, 246, 0.8) 10%), url("../Claude/images/svg1.png");
-      background-size: 100% 100%, cover;
-
-      background-position: 0 0, center 100%;
-    }
-
-    .stat-cards {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px
-    }
-
-    @media(min-width:640px) {
-      .stat-cards {
-        grid-template-columns: repeat(3, 1fr)
-      }
-    }
-
-    .stat-card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      overflow: visible
-    }
-
-    .stat-card-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: var(--radius-lg);
-      display: block
-    }
-
-    .stat-card-img.ph {
-      height: 220px;
-      border-radius: var(--radius-lg)
-    }
-
-    .sph1 {
-      background: linear-gradient(170deg, #3d5a3e, #1e3020)
-    }
-
-    .sph2 {
-      background: linear-gradient(170deg, #3a2d4a, #1e1528)
-    }
-
-    .sph3 {
-      background: linear-gradient(170deg, #4a3728, #2a1e14)
-    }
-
-    /* .stat-banner{
-  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-  width:80%;background:var(--white);border-radius:var(--radius);
-  padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,.15);
-  /* extends slightly below the card */
-    /* margin-bottom:-12px;
-}   */
-
-    .stat-banner {
-      margin: -0.0rem .875rem 0 .875rem;
-      background-color: #fff;
-      border-radius: 12px;
-      position: relative;
-      padding: 1.125rem 2rem 1.5rem 2rem;
-      min-height: 11.25rem
-    }
-
-    .stat-num {
-      font-family: var(--serif);
-      font-size: 32px;
-      color: var(--red);
-      line-height: 1;
-      margin-bottom: 4px
-    }
-
-    .stat-desc {
-      font-size: 1.5rem;
-      color: var(--gray-700);
-      line-height: 1.45
-    }
-
-    /* ── SECTION 3: Two-col text + image ── */
-    .two-col-section {
-      padding: 88px var(--px);
-      background: var(--gray-100);
-      border-top: 1px solid var(--gray-200);
-      border-bottom: 1px solid var(--gray-200)
-    }
-
-    .two-col-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      align-items: center
-    }
-
-    @media(min-width:768px) {
-      .two-col-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 52px
-      }
-    }
-
-    .two-col-text .section-tag {
-      margin-bottom: 10px
-    }
-
-    .two-col-text h2 {
-      font-family: var(--serif);
-      font-size: clamp(26px, 4vw, 36px);
-      font-weight: 400;
-      margin-bottom: 16px;
-      line-height: 1.15
-    }
-
-    .two-col-text p {
-      font-size: 16px;
-      color: var(--gray-700);
-      line-height: 1.8;
-      margin-bottom: 14px
-    }
-
-    .two-col-text p:last-of-type {
-      margin-bottom: 24px
-    }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1.5px solid var(--text);
-      border-radius: var(--radius);
-      padding: 10px 22px;
-      font-family: var(--sans);
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text);
-      text-decoration: none;
-      transition: background .15s, color .15s
-    }
-
-    .btn-outline:hover {
-      background: var(--text);
-      color: var(--white)
-    }
-
-    .two-col-img {
-      width: 100%;
-      height: 340px;
-      object-fit: cover;
-      border-radius: var(--radius-lg);
-      display: block
-    }
-
-    .two-col-img.ph {
-      height: 340px;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(160deg, #2c4a5a, #1a2d38)
-    }
-
-    /* ── CAROUSEL SHARED ── */
-    .carousel-section {
-      padding: 72px var(--px)
-    }
-
-    .carousel-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-      gap: 12px
-    }
-
-    .carousel-header h2 {
-      font-family: var(--serif);
-      font-size: clamp(24px, 4vw, 32px);
-      font-weight: 400
-    }
-
-    .carousel-nav {
-      display: flex;
-      gap: 8px
-    }
-
-    .car-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid var(--gray-200);
-      background: var(--white);
-      cursor: pointer;
-      font-size: 16px;
-      color: var(--gray-700);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color .15s, background .15s, color .15s;
-      flex-shrink: 0
-    }
-
-    .car-btn:hover {
-      border-color: var(--red);
-      color: var(--red);
-      background: #fdf3f2
-    }
-
-    .carousel-track-wrap {
-      overflow: hidden;
-      cursor: grab;
-      user-select: none
-    }
-
-    .carousel-track {
-      display: flex;
-      gap: 16px;
-      transition: transform .4s cubic-bezier(.4, 0, .2, 1);
-      will-change: transform
-    }
-
-    /* ── IMPACT STORY CARDS ── */
-    .story-card {
-      flex: 0 0 clamp(260px, 80vw, 300px);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--gray-200);
-      background: var(--white);
-      position: relative;
-      cursor: pointer
-    }
-
-    @media(min-width:640px) {
-      .story-card {
-        flex: 0 0 280px
-      }
-    }
-
-    .story-card-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-      transition: transform .4s ease
-    }
-
-    .story-card-img.ph {
-      height: 250px
-    }
-
-    .sc1 {
-      background: linear-gradient(170deg, #4a5568, #2d3748)
-    }
-
-    .sc2 {
-      background: linear-gradient(170deg, #3d5a3e, #2a3d2b)
-    }
-
-    .sc3 {
-      background: linear-gradient(170deg, #744210, #4a2c0a)
-    }
-
-    .sc4 {
-      background: linear-gradient(170deg, #2c4a5a, #1a2d38)
-    }
-
-    .sc5 {
-      background: linear-gradient(170deg, #4a3a5e, #2a1e3e)
-    }
-
-    .story-card:hover .story-card-img {
-      transform: scale(1.04)
-    }
-
-    .story-card-body {
-      padding: 18px 16px
-    }
-
-    .story-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--red);
-      font-weight: 500;
-      margin-bottom: 6px
-    }
-
-    .story-card-body h4 {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.45;
-      color: var(--text)
-    }
-
-    /* hover overlay */
-    .story-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(20, 18, 16, .88);
-      opacity: 0;
-      transition: opacity .3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 22px 18px;
-      pointer-events: none
-    }
-
-    .story-card:hover .story-overlay {
-      opacity: 1;
-      pointer-events: auto
-    }
-
-    .overlay-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--red);
-      font-weight: 500;
-      margin-bottom: 8px
-    }
-
-    .overlay-title {
-      font-family: var(--serif);
-      font-size: 18px;
-      color: var(--white);
-      line-height: 1.35;
-      margin-bottom: 10px
-    }
-
-    .overlay-desc {
-      font-size: 14px;
-      color: rgba(255, 255, 255, .7);
-      line-height: 1.55;
-      margin-bottom: 16px
-    }
-
-    .btn-read-more {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius);
-      padding: 8px 16px;
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background .15s;
-      text-decoration: none
-    }
-
-    .btn-read-more:hover {
-      background: var(--red-dark)
-    }
-
-    .btn-read-more .arrow {
-      display: inline-block;
-      transition: transform .2s
-    }
-
-    .btn-read-more:hover .arrow {
-      transform: translateX(3px)
-    }
-
-    /* ── QUOTE ── */
     .quote-section {
-      padding: 80px var(--px);
-      background: #141210;
-      color: var(--white)
-    }
-
-    @media(min-width:768px) {
-      .quote-section {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 52px;
-        align-items: center
-      }
-    }
-
-    .quote-portrait {
-      display: block;
-      width: 100%;
-      max-width: 280px;
-      aspect-ratio: 3/4;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(160deg, #2e4a30, #1a2e1b);
-      margin-bottom: 32px;
-      overflow: hidden
-    }
-
-    @media(min-width:768px) {
-      .quote-portrait {
-        max-width: none;
-        margin-bottom: 0
-      }
-    }
-
-    .quote-mark {
-      font-family: var(--serif);
-      font-size: 64px;
-      color: var(--red);
-      line-height: .6;
-      margin-bottom: 10px
-    }
-
-    .quote-text {
-      font-family: var(--serif);
-      font-size: clamp(17px, 3vw, 22px);
-      line-height: 1.55;
-      color: #f0ede8;
-      margin-bottom: 20px
-    }
-
-    .quote-attr {
-      font-size: 15px;
-      color: #888
-    }
-
-    .quote-attr strong {
-      display: block;
-      color: #ccc;
-      font-weight: 500;
-      margin-bottom: 2px
-    }
-
-    /* ── NEWS CARDS (same carousel structure) ── */
-    .news-section {
-      padding: 72px var(--px);
-      background: var(--gray-100);
-      border-top: 1px solid var(--gray-200)
-    }
-
-    .news-card {
-      flex: 0 0 clamp(240px, 80vw, 280px);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--gray-200);
-      background: var(--white);
-      position: relative;
-      cursor: pointer
-    }
-
-    @media(min-width:640px) {
-      .news-card {
-        flex: 0 0 260px
-      }
-    }
-
-    .news-card-img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      display: block;
-      transition: transform .4s ease
-    }
-
-    .news-card-img.ph {
-      height: 250px
-    }
-
-    .nc1 {
-      background: linear-gradient(170deg, #2c4a3a, #162818)
-    }
-
-    .nc2 {
-      background: linear-gradient(170deg, #3a2c4a, #1e1528)
-    }
-
-    .nc3 {
-      background: linear-gradient(170deg, #4a3c28, #2a2010)
-    }
-
-    .nc4 {
-      background: linear-gradient(170deg, #2c3e4a, #141e28)
-    }
-
-    .news-card:hover .news-card-img {
-      transform: scale(1.04)
-    }
-
-    .news-card-body {
-      padding: 16px
-    }
-
-    .news-type {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--red);
-      font-weight: 500;
-      margin-bottom: 6px
-    }
-
-    .news-card-body h4 {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.45;
-      margin-bottom: 6px
-    }
-
-    .news-date {
-      font-size: 13px;
-      color: var(--gray-400)
-    }
-
-    /* overlay same pattern */
-    .news-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(20, 18, 16, .88);
-      opacity: 0;
-      transition: opacity .3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 20px 16px;
-      pointer-events: none
-    }
-
-    .news-card:hover .news-overlay {
-      opacity: 1;
-      pointer-events: auto
-    }
-
-    /* ── KEEP IN TOUCH ── */
-    .kit-section {
-      padding: 80px var(--px);
-      border-top: 1px solid var(--gray-200)
-    }
-
-    .kit-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px
-    }
-
-    @media(min-width:768px) {
-      .kit-grid {
-        grid-template-columns: 1fr 1fr;
-        align-items: start
-      }
-    }
-
-    .kit-left h2 {
-      font-family: var(--serif);
-      font-size: clamp(26px, 4vw, 36px);
-      font-weight: 400;
-      margin-bottom: 12px
-    }
-
-    .kit-left p {
-      font-size: 16px;
-      color: var(--gray-700);
-      line-height: 1.75;
-      margin-bottom: 20px
-    }
-
-    .kit-badges {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap
-    }
-
-    .kit-badge {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid var(--gray-200);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 14px;
-      color: var(--gray-700)
-    }
-
-    .kit-badge span {
-      font-size: 16px
-    }
-
-    .kit-form {
-      background: var(--gray-100);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      padding: 28px 24px
-    }
-
-    .kit-form h3 {
-      font-family: var(--serif);
-      font-size: 20px;
-      font-weight: 400;
-      margin-bottom: 4px
-    }
-
-    .kit-form p {
-      font-size: 15px;
-      color: var(--gray-700);
-      margin-bottom: 22px
-    }
-
-    .form-group {
-      margin-bottom: 14px
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 5px
-    }
-
-    .form-group label .req {
-      color: var(--red)
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px 13px;
-      font-family: var(--sans);
-      font-size: 14px;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius);
-      background: var(--white);
-      color: var(--text);
-      outline: none;
-      transition: border-color .15s;
-      appearance: none
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--gray-700)
-    }
-
-    .form-group textarea {
-      min-height: 90px;
-      resize: vertical;
-      line-height: 1.6
-    }
-
-    .form-row-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px
-    }
-
-    .form-check {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      margin-top: 4px
-    }
-
-    .form-check input[type=checkbox] {
-      width: 15px;
-      height: 15px;
-      margin-top: 3px;
-      accent-color: var(--red);
-      flex-shrink: 0;
-      cursor: pointer
-    }
-
-    .form-check label {
-      font-size: 14px;
-      color: var(--gray-700);
-      line-height: 1.5;
-      cursor: pointer
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius);
-      padding: 12px;
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background .15s;
-      margin-top: 16px
-    }
-
-    .btn-submit:hover {
-      background: var(--red-dark)
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: #0d0c0b;
-      color: #bbb;
-      padding: 44px var(--px) 24px
-    }
-
-    .footer-top {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid #222
-    }
-
-    @media(min-width:640px) {
-      .footer-top {
-        grid-template-columns: 1fr 1fr
-      }
-    }
-
-    @media(min-width:1024px) {
-      .footer-top {
-        grid-template-columns: 1.4fr 1fr 1fr 1fr
-      }
-    }
-
-    .footer-brand {
-      font-family: var(--serif);
-      font-size: 22px;
-      color: var(--white);
-      margin-bottom: 10px
-    }
-
-    .footer-contact {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.8
-    }
-
-    .footer-col h4 {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #555;
-      margin-bottom: 12px;
-      font-weight: 500
-    }
-
-    .footer-col ul {
-      list-style: none
-    }
-
-    .footer-col li {
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 7px;
-      cursor: pointer;
-      transition: color .15s
-    }
-
-    .footer-col li:hover {
-      color: var(--white)
-    }
-
-    .f-social-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px
-    }
-
-    .f-social-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #1e1d1b;
-      border: 1px solid #2a2927;
-      display: flex;
+      gap: 36px;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #888;
-      font-size: 13px;
-      transition: all .15s
+      padding: 64px 40px;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      color: inherit;
     }
-
-    .f-social-btn:hover {
-      background: #2a2927;
-      color: var(--white)
+    .quote-portrait {
+      width: 100%;
+      min-height: 420px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
     }
-
-    .footer-bottom {
-      padding-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: space-between;
-      align-items: center
+    .quote-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+      display: block;
     }
-
-    .footer-copy {
-      font-size: 12px;
-      color: #444
-    }
-
-    .footer-sites {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap
-    }
-
-    .footer-sites a {
-      font-size: 12px;
-      color: #555;
-      text-decoration: none
-    }
-
-    .footer-sites a:hover {
-      color: #888
+    @media (max-width: 900px) {
+      .quote-section {
+        grid-template-columns: 1fr;
+        padding: 40px 24px;
+      }
+      .quote-portrait {
+        min-height: 320px;
+      }
+      .quote-portrait img {
+        object-position: right center;
+      }
     }
   </style>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
+<!-- SIGNUP STIPEND BANNER -->
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="Torvu_solutions_mockup.html">T<em>o</em>rvu</a>
-    <div class="nav-links">
-      <a href="Torvu_about.html">About us</a>
-      <a href="Torvu_solutions_mockup.html" class="active">Our solutions ecosystem</a>
-      <a href="#">Global impact</a>
-      <a href="#">Stay informed</a>
-      <a href="Torvu_contact.html">Get involved</a>
-    </div>
-    <div class="nav-right">
-        <a href="{% url 'torvu:request_assistance_form' %}"><button class="btn-request">Request Assistance</button></a>
-      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu(this)">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="Torvu_about.html">About us</a>
-    <a href="Torvu_solutions_mockup.html" class="active">Our solutions ecosystem</a>
-    <a href="#">Global impact</a>
-    <a href="#">Stay informed</a>
-    <a href="Torvu_contact.html">Get involved</a>
-    <a href="Torvu_register.html">Sign up</a>
-  </div>
+<div id="stipend-banner" style="background:#c56b62;padding:14px 48px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;border-radius:10px;margin:10px 16px;">
+  <span style="font-size:15px;font-weight:500;color:#fff;letter-spacing:0.01em;">
+    🎉 Torv's Promise: Sign up today and receive a <strong style="color:#ffffff;">$50 stipend</strong> to support your journey.
+    <a href="{% url 'torvu:request_assistance_form' %}" style="display:inline-block;margin-left:12px;background:#fff;color:#c56b62;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;text-decoration:none;white-space:nowrap;">
+      Get started →
+    </a>
+  </span>
+  <button onclick="document.getElementById('stipend-banner').style.display='none'" aria-label="Dismiss banner" style="position:absolute;right:14px;top:10px;background:none;border:none;color:#ffb3ab;font-size:18px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:4px;">
+    &times;
+  </button>
+</div>
 
   <!-- HERO -->
   <div class="hero-wrap">
-    <div class="hero-img-full placeholder"></div>
+    <div class="hero-img-full placeholder">
+      {% include "common/curve2.html" %}
+    </div>
 
     <div class="hero-banner">
       <div class="hero-banner-title">Our Solutions Ecosystem</div>
@@ -1294,8 +81,8 @@
         Inequality is human-made, which means it can be unmade
       </div>
     </div>
-  </div>
 
+  </div>
 
   <!-- PAGE BODY: main + social aside -->
   <div class="page-body">
@@ -1304,32 +91,56 @@
       <!-- SECTION 1: Intro images + text -->
       <section class="intro-section">
         <div class="section-tag">What we do</div>
-        <h2 class="section-h2">Over 50 years of integrated impact</h2>
+        <h2 class="section-h2">Building pathways to work, dignity, and financial independence</h2>
         <div class="intro-images">
           <div class="intro-img ph ph1">
-            <img src="{% static 'img/one.avif' %}" alt="Placeholder image"
+            <img src="{% static 'img/what_we_do.avif' %}" alt="Torvu team members supporting job seekers through workforce development and career coaching"
               style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
           </div>
           <div class="intro-img ph ph2">
-            <img src="{% static 'img/one.avif' %}" alt="Placeholder image"
+            <img src="{% static 'img/what_we_do2.avif' %}" alt="A participant receiving guidance on resume building, interview readiness, and employment support"
               style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
           </div>
           <div class="intro-img ph ph3">
-            <img src="{% static 'img/one.avif' %}" alt="Placeholder image"
+            <img src="{% static 'img/what_we_do3.avif' %}" alt="Community-focused employment services that help people build skills and move toward financial independence"
               style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
           </div>
         </div>
         <div class="intro-text">
-          <p>For over five decades, Torvu has operated at the intersection of community development, financial
-            inclusion, and human dignity. We don't believe in single-issue solutions — poverty is complex, and so is the
-            work to address it. <strong>Our integrated ecosystem brings together healthcare, education, livelihoods, and
-              enterprise</strong> under one roof, creating lasting, compounding change.</p>
-          <p>We work in 14 countries across Asia and Africa, reaching <strong>over 145 million people</strong> through a
-            unique combination of development programmes, social enterprises, and impact investments. Each intervention
-            is locally-rooted, rigorously tested, and designed to scale. What works in one community becomes a model for
-            the next.</p>
+          <p>At Torvu, we believe that every person deserves the opportunity to build a stable future through meaningful work. 
+            Yet millions of Americans face barriers that make employment difficult—from homelessness and poverty to disability, incarceration, lack of education, or long-term unemployment.
+            We don't believe job placement alone solves these challenges. Lasting economic mobility requires an integrated approach that addresses the obstacles standing between people and opportunity.
+          </p>
+          <p>Our ecosystem combines workforce development, career coaching, employer partnerships, skills training, financial empowerment, and supportive services under one mission: <strong> helping vulnerable Americans secure employment and achieve long-term independence.</strong>
+
+          Every program is designed around measurable outcomes, local partnerships, and sustainable impact. We help people not only find jobs, but build careers.
+        </p>
+        
         </div>
       </section>
+
+      <section class="two-col-section">
+        <div class="two-col-grid">
+          <div class="two-col-img ph">
+            <img src="{% static 'img/why_torvu.avif' %}" alt="A supportive Torvu coaching session showing how career guidance helps people access jobs and financial stability"
+              style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+          </div>
+          <div class="two-col-text">            
+            <div class="section-tag">Why Torvu</div>
+            <h3>Get free career coaching, resume support, job training, and connections to employers—all at no cost to you.</h3>
+              <p> Unlike private staffing agencies or paid training providers, Torvu never charges job seekers for assistance.</p>
+
+              <p> programs are funded through donations, grants, corporate partnerships, and community support so participants can focus on building their futures—not paying fees.
+
+              </p>
+             <a class="btn-cta" href="{% url 'torvu:request_assistance_form' %}">Request assistance &#8594;</a>
+          </div>
+          
+        </div>
+      </section>
+      <div class="spacer layer2"></div>
+
+
 
       <!-- SECTION 2: Stat cards -->
       <section class="stats-section">
@@ -1338,32 +149,32 @@
         <div class="stat-cards">
           <div class="stat-card">
             <div class="stat-card-img ph sph1">
-              <img src="images/one.avif" alt="Placeholder image"
+              <img src="{% static 'img/impact_at_a_glance1.avif' %}" alt="Visual summary of the number of people supported through Torvu employment and career development programs"
                 style="width:100%;height:21.25rem;object-fit:cover;border-radius:inherit;display:block">
             </div>
             <div class="stat-banner">
-              <div class="stat-num">145M</div>
-              <div class="stat-desc">People reached with Torvu's holistic solutions</div>
+              <div class="stat-num">100,000+</div>
+              <div class="stat-desc">Individuals supported through employment and career development services</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-img ph sph2">
-              <img src="images/two.avif" alt="Placeholder image"
+              <img src="{% static 'img/impact_at_a_glance2.avif' %}" alt="Graphic highlighting that Torvu services are offered at no cost to participants seeking work support"
                 style="width:100%;height:21.25rem;object-fit:cover;border-radius:inherit;display:block">
             </div>
             <div class="stat-banner">
-              <div class="stat-num">90%</div>
-              <div class="stat-desc">Of development programmes self-funded through social enterprise</div>
+              <div class="stat-num">$ 0</div>
+              <div class="stat-desc">Paid to access our mentorship programs</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-img ph sph3">
-              <img src="images/three.avif" alt="Placeholder image"
+              <img src="{% static 'img/impact_at_a_glance3.avif' %}" alt="Illustration of employer partnerships that create inclusive job opportunities and workforce pathways"
                 style="width:100%;height:21.25rem;object-fit:cover;border-radius:inherit;display:block">
             </div>
             <div class="stat-banner">
-              <div class="stat-num">12</div>
-              <div class="stat-desc">Social enterprises across Bangladesh, Tanzania and Uganda</div>
+              <div class="stat-num">1,200+</div>
+              <div class="stat-desc">Employer partners committed to inclusive hiring and workforce development</div>
             </div>
           </div>
         </div>
@@ -1371,466 +182,139 @@
 
       <!-- SECTION 3: Two column text + image -->
       <section class="two-col-section">
+            {% include "common/curve3.html" %}
+
         <div class="two-col-grid">
           <div class="two-col-text">
             <div class="section-tag">Our approach</div>
             <h2>Four pathways to lasting empowerment</h2>
-            <p>Torvu's model rests on a conviction that poverty isn't one problem — it's a web of interlocking
-              disadvantages. We've mapped four reinforcing pathways through which communities move from deprivation to
-              dignity.</p>
-            <p>From strengthening livelihoods and opening access to credit, to delivering essential health and education
-              services, to giving communities a voice in decisions that affect their lives — our pathways work in
-              concert, not isolation.</p>
-            <a class="btn-outline" href="#">Learn about our framework &#8594;</a>
+            <p>We recognize that unemployment is rarely caused by a lack of willingness to work. More often, it results from interconnected barriers that require coordinated solutions.</p>
+            <p>Our model focuses on four pathways:</p>
+
+            <h3>Career Readiness</h3>
+            <p>Resume development, interview preparation, digital literacy, workplace skills, and professional coaching.</p>
+
+            <h3>Employment Access</h3>
+            <p>Direct connections to employers, apprenticeships, vocational training, and career placement opportunities.</p>
+
+            <h3>Financial Stability</h3>
+            <p>Budgeting support, financial literacy, credit building, and access to resources that help families remain stable.</p>
+
+            <h3>Long-Term Advancement</h3>
+
+            <p>Mentorship, career progression planning, continuing education, and ongoing support after placement.</p>
+
+            <p>Together, these pathways help individuals move from economic hardship to self-sufficiency and long-term prosperity.</p>
+            <a class="btn-outline" href="{% url 'torvu:stay_informed' %}">Learn about our framework &#8594;</a>
           </div>
           <div class="two-col-img ph">
-            <img src="images/one.avif" alt="Placeholder image"
+            <img src="{% static 'img/our_approach.avif' %}" alt="An illustration of Torvu's four integrated pathways: career readiness, employment access, financial stability, and long-term advancement"
               style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
           </div>
         </div>
-  </div>
-  </section>
+      </section>
 
-  <!-- SECTION 4: Impact stories carousel -->
-  <section class="carousel-section">
-    <div class="carousel-header">
-      <div>
-        <div class="section-tag">Impact stories</div>
-        <h2>Stories from the field</h2>
-      </div>
-      <div class="carousel-nav">
-        <button class="car-btn" onclick="slide('stories',-1)" aria-label="Previous">&#8592;</button>
-        <button class="car-btn" onclick="slide('stories',1)" aria-label="Next">&#8594;</button>
-      </div>
-    </div>
-    <div class="carousel-track-wrap">
-      <div class="carousel-track" id="stories-track">
-        <div class="story-card">
-          <div class="story-card-img ph sc1">
-            <img src="images/two.avif" alt="Placeholder image"
-              style="width:100%;height:250px;object-fit:cover;border-radius:inherit;display:block">
+      <!-- SECTION 4: Impact stories carousel -->
+      <section class="carousel-section">
+        <div class="carousel-header">
+          <div>
+            <div class="section-tag">Impact stories</div>
+            <h2>Stories from the field</h2>
           </div>
-          <div class="story-card-body">
-            <div class="story-tag">Social enterprise</div>
-            <h4>Profit for Good: how Torvu's model funds its own mission</h4>
-          </div>
-          <div class="story-overlay">
-            <div class="overlay-tag">Social enterprise</div>
-            <div class="overlay-title">Profit for Good: how Torvu's model funds its own mission</div>
-            <div class="overlay-desc">What if doing good and doing business are two sides of the same coin? Our
-              Executive Director explores Torvu's self-sustaining development model.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+          <div class="carousel-nav">
+            <button class="car-btn" onclick="slide('stories',-1)" aria-label="Previous">&#8592;</button>
+            <button class="car-btn" onclick="slide('stories',1)" aria-label="Next">&#8594;</button>
           </div>
         </div>
-        <div class="story-card">
-          <div class="story-card-img ph sc2">
-            <img src="images/three.avif" alt="Placeholder image"
-              style="width:100%;height:250px;object-fit:cover;border-radius:inherit;display:block">
-          </div>
-          <div class="story-card-body">
-            <div class="story-tag">Education</div>
-            <h4>Development needs to change. Bangladesh can show us how</h4>
-          </div>
-          <div class="story-overlay">
-            <div class="overlay-tag">Education</div>
-            <div class="overlay-title">Development needs to change. Bangladesh can show us how</div>
-            <div class="overlay-desc">Bangladesh's transformation is one of the great untold development stories —
-              built on community schools, microfinance, and radical inclusion.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
+        <div class="carousel-track-wrap">
+          <div class="carousel-track" id="stories-track">
+            
+            {% for post in good_feed_posts %}
+            <a class="story-card" href="{% url 'torvu:post' post.slug %}">
+              <div class="story-card-img ph {% if forloop.counter == 1 %}sc1{% elif forloop.counter == 2 %}sc2{% elif forloop.counter == 3 %}sc3{% elif forloop.counter == 4 %}sc4{% else %}sc5{% endif %}">
+                {% if post.hero_image %}
+                <img src="{{ post.hero_image.url }}" alt="{{ post.hero_alt|default:post.title }}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+                {% endif %}
+              </div>
+              <div class="story-card-body">
+                <div class="story-tag">{{ post.category }}</div>
+                <h4>{{ post.title }}</h4>
+              </div>
+              <div class="story-overlay">
+                <div class="overlay-tag">{{ post.category }}</div>
+                <div class="overlay-title">{{ post.title }}</div>
+                <div class="overlay-desc">{{ post.excerpt }}</div>
+                <span class="btn-read-more">Read More <span class="arrow">&#8594;</span></span>
+              </div>
+            </a>
+            {% endfor %}
           </div>
         </div>
-        <div class="story-card">
-          <div class="story-card-img ph sc3">
-            <img src="images/one.avif" alt="Placeholder image"
-              style="width:100%;height:250px;object-fit:cover;border-radius:inherit;display:block">
+      </section>
 
-          </div>
-          <div class="story-card-body">
-            <div class="story-tag">Livelihoods</div>
-            <h4>'We work with many different models for nation-building'</h4>
-          </div>
-          <div class="story-overlay">
-            <div class="overlay-tag">Livelihoods</div>
-            <div class="overlay-title">'We work with many different models for nation-building'</div>
-            <div class="overlay-desc">Our Enterprises lead discusses international expansion, new sectors, and what
-              it means to put purpose before profit in every decision.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-        <div class="story-card">
-          <div class="story-card-img ph sc4">
-            <img src="images/four.avif" alt="Placeholder image"
-              style="width:100%;height:250px;object-fit:cover;border-radius:inherit;display:block">
-          </div>
-          <div class="story-card-body">
-            <div class="story-tag">Health</div>
-            <h4>Community health workers: the backbone of rural healthcare</h4>
-          </div>
-          <div class="story-overlay">
-            <div class="overlay-tag">Health</div>
-            <div class="overlay-title">Community health workers: the backbone of rural healthcare</div>
-            <div class="overlay-desc">In some of the most remote corners of Bangladesh, a network of trained women
-              are the first — and sometimes only — line of healthcare defence.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-        <div class="story-card">
-          <div class="story-card-img ph sc5"></div>
-          <div class="story-card-body">
-            <div class="story-tag">Climate</div>
-            <h4>When the floods came: adapting livelihoods to a changing climate</h4>
-          </div>
-          <div class="story-overlay">
-            <div class="overlay-tag">Climate</div>
-            <div class="overlay-title">When the floods came: adapting livelihoods to a changing climate</div>
-            <div class="overlay-desc">Climate change hits hardest those who contributed least to it. Torvu's
-              climate-resilient agriculture programme is rewriting that story.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      <!-- QUOTE -->
+      <section class="quote-section">
+        <div class="quote-portrait">
+          <img src="{% static 'img/ten.avif' %}" alt="Torvu leadership representative engaging with a job seeker in a professional coaching and support setting"
+            style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+                  {% include "common/curve2.html" %}
 
-  <!-- QUOTE -->
-  <section class="quote-section">
-    <div class="quote-portrait">
-        <img src="images/one.avif" alt="Placeholder image"
-              style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+        </div>
+        <div>
+          <div class="quote-mark">&ldquo;</div>
+          <p class="quote-text">For too long, people thought poverty was something ordained by a higher power, as
+            immutable as the sun and the moon. This is a myth. Giving people hope and self-esteem may be the greatest
+            investment in human capital.</p>
+          <div class="quote-attr">
+            <strong>Sir Fazle Hasan Abed</strong>Founder, Torvu
+          </div>
+        </div>
+      </section>
 
-    </div>
-    <div>
-      <div class="quote-mark">&ldquo;</div>
-      <p class="quote-text">For too long, people thought poverty was something ordained by a higher power, as
-        immutable as the sun and the moon. This is a myth. Giving people hope and self-esteem may be the greatest
-        investment in human capital.</p>
-      <div class="quote-attr">
-        <strong>Sir Fazle Hasan Abed</strong>Founder, Torvu
-      </div>
-    </div>
-  </section>
+      <!-- LATEST NEWS carousel -->
+      <section class="news-section carousel-section">
+        <div class="carousel-header">
+          <div>
+            <div class="section-tag">Latest news</div>
+            <h2>Recent updates</h2>
+          </div>
+          <div class="carousel-nav">
+            <button class="car-btn" onclick="slide('news',-1)" aria-label="Previous">&#8592;</button>
+            <button class="car-btn" onclick="slide('news',1)" aria-label="Next">&#8594;</button>
+          </div>
+        </div>
+        <div class="carousel-track-wrap">
+          <div class="carousel-track" id="news-track">
+            {% for post in news_posts %}
+            <div class="news-card">
+              <div class="news-card-img ph {% if forloop.counter == 1 %}nc1{% elif forloop.counter == 2 %}nc2{% elif forloop.counter == 3 %}nc3{% else %}nc4{% endif %}">
+                {% if post.hero_image %}
+                <img src="{{ post.hero_image.url }}" alt="{{ post.hero_alt|default:post.title }}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+                {% endif %}
+              </div>
+              <div class="news-card-body">
+                <div class="news-type">{{ post.category }}</div>
+                <h4>{{ post.title }}</h4>
+                <div class="news-date">{{ post.created_at|date:"F Y" }}</div>
+              </div>
+              <div class="news-overlay">
+                <div class="overlay-tag">{{ post.category }}</div>
+                <div class="overlay-title">{{ post.title }}</div>
+                <div class="overlay-desc">{{ post.excerpt }}</div>
+                <a class="btn-read-more" href="{% url 'torvu:post' post.slug %}">Read More <span class="arrow">&#8594;</span></a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
 
-  <!-- LATEST NEWS carousel -->
-  <section class="news-section carousel-section">
-    <div class="carousel-header">
-      <div>
-        <div class="section-tag">Latest news</div>
-        <h2>Recent updates</h2>
-      </div>
-      <div class="carousel-nav">
-        <button class="car-btn" onclick="slide('news',-1)" aria-label="Previous">&#8592;</button>
-        <button class="car-btn" onclick="slide('news',1)" aria-label="Next">&#8594;</button>
-      </div>
-    </div>
-    <div class="carousel-track-wrap">
-      <div class="carousel-track" id="news-track">
-        <div class="news-card">
-          <div class="news-card-img ph nc1"></div>
-          <div class="news-card-body">
-            <div class="news-type">Press release</div>
-            <h4>Torvu Executive Director named to 2026 TIME100 Philanthropy List</h4>
-            <div class="news-date">May 2026</div>
-          </div>
-          <div class="news-overlay">
-            <div class="overlay-tag">Press release</div>
-            <div class="overlay-title">Torvu Executive Director named to 2026 TIME100 Philanthropy List</div>
-            <div class="overlay-desc">TIME magazine recognises our leadership's global impact in philanthropy and
-              development.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-        <div class="news-card">
-          <div class="news-card-img ph nc2"></div>
-          <div class="news-card-body">
-            <div class="news-type">Press release</div>
-            <h4>400 meritorious students to receive grants and monthly scholarships</h4>
-            <div class="news-date">May 2026</div>
-          </div>
-          <div class="news-overlay">
-            <div class="overlay-tag">Press release</div>
-            <div class="overlay-title">400 meritorious students to receive grants</div>
-            <div class="overlay-desc">Torvu's scholarship programme expands access to higher education for
-              underprivileged students across Bangladesh.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-        <div class="news-card">
-          <div class="news-card-img ph nc3"></div>
-          <div class="news-card-body">
-            <div class="news-type">Annual report</div>
-            <h4>Torvu publishes its 2025 Annual Report</h4>
-            <div class="news-date">April 2026</div>
-          </div>
-          <div class="news-overlay">
-            <div class="overlay-tag">Annual report</div>
-            <div class="overlay-title">Torvu publishes its 2025 Annual Report</div>
-            <div class="overlay-desc">A full account of our programmes, finances, and impact across 14 countries in
-              the 2025 fiscal year.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-        <div class="news-card">
-          <div class="news-card-img ph nc4"></div>
-          <div class="news-card-body">
-            <div class="news-type">Press release</div>
-            <h4>National workshop on strengthening primary health care in Bangladesh</h4>
-            <div class="news-date">April 2026</div>
-          </div>
-          <div class="news-overlay">
-            <div class="overlay-tag">Press release</div>
-            <div class="overlay-title">Workshop on primary health care strengthening</div>
-            <div class="overlay-desc">Torvu convened health ministry officials and community leaders to align on a
-              national primary care strategy.</div>
-            <a class="btn-read-more" href="#">Read More <span class="arrow">&#8594;</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+      <!-- KEEP IN TOUCH -->
+      
 
-  <!-- KEEP IN TOUCH -->
-  <section class="kit-section">
-    <div class="kit-grid">
-      <div class="kit-left">
-        <div class="section-tag">Stay connected</div>
-        <h2>Keep in touch</h2>
-        <p>Whether you want to support our work, follow our stories, partner with us, or just stay informed — we'd
-          love to hear from you. Drop us a message and we'll get back to you within two business days.</p>
-
-      </div>
-      <div class="kit-form">
-        <h3>Send us a message</h3>
-        <p>Our team will respond within 2 business days.</p>
-        <div class="form-row-2">
-          <div class="form-group">
-            <label>First name <span class="req">*</span></label>
-            <input type="text" placeholder="Anika">
-          </div>
-          <div class="form-group">
-            <label>Last name <span class="req">*</span></label>
-            <input type="text" placeholder="Rahman">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Email address <span class="req">*</span></label>
-          <input type="email" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label>I'm reaching out as</label>
-          <select>
-            <option value="" disabled selected>Select one</option>
-            <option>Donor or philanthropist</option>
-            <option>Partner organisation</option>
-            <option>Researcher or academic</option>
-            <option>Journalist or media</option>
-            <option>General enquiry</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message <span class="req">*</span></label>
-          <textarea placeholder="Tell us how we can help..."></textarea>
-        </div>
-        <div class="form-check">
-          <input type="checkbox" id="nl-check" checked>
-          <label for="nl-check">Subscribe me to Torvu's newsletter for impact updates and stories.</label>
-        </div>
-        <button class="btn-submit">Send message &#8594;</button>
-      </div>
-    </div>
-  </section>
-
-  </main>
-
-
+    </main>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-top">
-      <div>
-        <div class="footer-brand">Torvu</div>
-        <p class="footer-contact">Torvu Centre, 75 Mohakhali<br>Dhaka-1212, Bangladesh<br>Tel: 88 02 2222
-          81265<br>info@torvu.org</p>
-        <div class="f-social-row">
-          <div class="f-social-btn">f</div>
-          <div class="f-social-btn">&#120143;</div>
-          <div class="f-social-btn">&#9432;</div>
-          <div class="f-social-btn">&#9654;</div>
-          <div class="f-social-btn">in</div>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Get involved</h4>
-        <ul>
-          <li>Career</li>
-          <li>Internship</li>
-          <li>E-Tender</li>
-          <li>Visit Torvu</li>
-          <li>Partner with us</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Explore</h4>
-        <ul>
-          <li>Innovation</li>
-          <li>Advocacy</li>
-          <li>Press resources</li>
-          <li>The Good Feed</li>
-          <li>Publications</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Torvu network</h4>
-        <ul>
-          <li>Torvu International</li>
-          <li>Torvu Europe</li>
-          <li>Torvu USA</li>
-          <li>Torvu University</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">&copy; 2026 Torvu. All rights reserved.</div>
-      <div class="footer-sites">
-        <a href="#">Privacy policy</a>
-        <a href="#">Cookie policy</a>
-        <a href="#">Accessibility</a>
-      </div>
-    </div>
-  </footer>
 
-  <script>
-    // hamburger
-    function toggleMenu(btn) {
-      btn.classList.toggle('open');
-      document.getElementById('mobile-menu').classList.toggle('open');
-    }
-
-    // ── CAROUSEL ENGINE ──
-    // Each carousel: index, trackId, auto-advance timer, drag state
-    const carousels = {
-      stories: { index: 0, trackId: 'stories-track', timer: null },
-      news:    { index: 0, trackId: 'news-track',    timer: null }
-    };
-
-    const AUTO_INTERVAL = 3500; // ms between auto-advances
-
-    function getCardWidth(trackEl) {
-      if (!trackEl.children.length) return 0;
-      return trackEl.children[0].offsetWidth + 16; // 16 = gap
-    }
-
-    function applySlide(name, instant) {
-      const c = carousels[name];
-      const track = document.getElementById(c.trackId);
-      const cardW = getCardWidth(track);
-      const visible = Math.max(1, Math.floor(track.parentElement.offsetWidth / cardW));
-      const max = Math.max(0, track.children.length - visible);
-      c.index = Math.min(Math.max(c.index, 0), max);
-      if (instant) {
-        track.style.transition = 'none';
-        track.style.transform = `translateX(-${c.index * cardW}px)`;
-        // re-enable transition after paint
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          track.style.transition = '';
-        }));
-      } else {
-        track.style.transform = `translateX(-${c.index * cardW}px)`;
-      }
-    }
-
-    function slide(name, dir) {
-      const c = carousels[name];
-      const track = document.getElementById(c.trackId);
-      const cardW = getCardWidth(track);
-      const visible = Math.max(1, Math.floor(track.parentElement.offsetWidth / cardW));
-      const max = Math.max(0, track.children.length - visible);
-      c.index = c.index + dir;
-      // wrap around
-      if (c.index > max) c.index = 0;
-      if (c.index < 0)   c.index = max;
-      applySlide(name);
-      resetTimer(name);
-    }
-
-    function startTimer(name) {
-      const c = carousels[name];
-      c.timer = setInterval(() => slide(name, 1), AUTO_INTERVAL);
-    }
-
-    function resetTimer(name) {
-      const c = carousels[name];
-      clearInterval(c.timer);
-      startTimer(name);
-    }
-
-    // ── DRAG / MOUSE-SCROLL ──
-    function initDrag(name) {
-      const c = carousels[name];
-      const wrap = document.getElementById(c.trackId).parentElement;
-      let startX = 0, startIndex = 0, isDragging = false;
-
-      function onDown(e) {
-        isDragging = true;
-        startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-        startIndex = c.index;
-        clearInterval(c.timer);
-        wrap.style.cursor = 'grabbing';
-      }
-
-      function onMove(e) {
-        if (!isDragging) return;
-        const x = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-        const dx = startX - x;
-        const track = document.getElementById(c.trackId);
-        const cardW = getCardWidth(track);
-        // live drag feedback
-        track.style.transition = 'none';
-        track.style.transform = `translateX(-${startIndex * cardW + dx}px)`;
-      }
-
-      function onUp(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        wrap.style.cursor = '';
-        const x = e.type === 'touchend'
-          ? e.changedTouches[0].clientX
-          : e.clientX;
-        const dx = startX - x;
-        const track = document.getElementById(c.trackId);
-        track.style.transition = '';
-        const cardW = getCardWidth(track);
-        if (Math.abs(dx) > cardW * 0.25) {
-          slide(name, dx > 0 ? 1 : -1);
-        } else {
-          applySlide(name); // snap back
-          resetTimer(name);
-        }
-      }
-
-      // Mouse events
-      wrap.addEventListener('mousedown',  onDown);
-      window.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseup',   onUp);
-
-      // Touch events
-      wrap.addEventListener('touchstart', onDown, { passive: true });
-      wrap.addEventListener('touchmove',  onMove, { passive: true });
-      wrap.addEventListener('touchend',   onUp);
-
-      // Pause auto-advance on hover
-      wrap.addEventListener('mouseenter', () => clearInterval(c.timer));
-      wrap.addEventListener('mouseleave', () => { if (!isDragging) startTimer(name); });
-    }
-
-    // ── INIT ──
-    document.addEventListener('DOMContentLoaded', () => {
-      Object.keys(carousels).forEach(name => {
-        initDrag(name);
-        startTimer(name);
-      });
-    });
-  </script>
-</body>
-
-</html>
+  {% include "common/contact.html" %}
+{% endblock %}

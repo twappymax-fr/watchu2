@@ -1,0 +1,394 @@
+{% extends 'common/base.html' %}
+
+{% load static %}
+
+{% block title %}About Us — Torvu{% endblock %}
+
+
+{% block extra_css %}
+
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #c0392b; --red-dark: #96281b; --white: #fff;
+    --gray-100: #f5f4f0; --gray-200: #e8e6e0; --gray-400: #a0998c; --gray-700: #4a4740;
+    --text: #1a1917; --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif; --radius: 10px; --radius-lg: 16px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--text); background: var(--white); font-size: 18px; line-height: 1.75; }
+
+  /* HERO */
+  .page-hero { background: linear-gradient(180deg, rgba(20,18,16,0.75), rgba(20,18,16,0.75)), url("{% static 'img/five.avif' %}") center/cover no-repeat; color: var(--white); padding: 72px 40px 64px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+  .hero-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--red); margin-bottom: 16px; font-weight: 500; }
+  .page-hero h1 { font-family: var(--serif); font-size: 52px; line-height: 1.05; font-weight: 400; margin-bottom: 20px; }
+  .page-hero p { font-size: 15px; color: #bbb; line-height: 1.7; }
+  .hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .hero-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 20px; }
+  .hero-stat-num { font-family: var(--serif); font-size: 32px; color: var(--red); }
+  .hero-stat-label { font-size: 12px; color: #888; margin-top: 4px; line-height: 1.4; }
+
+  /* HISTORY TIMELINE */
+  .history-section { padding: 64px 40px; border-bottom: 1px solid var(--gray-200); }
+  .section-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gray-400); margin-bottom: 10px; font-weight: 500; }
+  .history-section h2 { font-family: var(--serif); font-size: 34px; font-weight: 400; margin-bottom: 12px; }
+  .history-section .sub { font-size: 14px; color: var(--gray-700); max-width: 560px; line-height: 1.65; margin-bottom: 48px; }
+  .timeline { display: grid; gap: 40px; }
+  .timeline-column { display: grid; gap: 40px; }
+  .timeline-column { position: relative; padding-left: 32px; border-left: 2px solid var(--gray-200); display: grid; gap: 36px; }
+  .timeline-item { position: relative; }
+  @media (min-width: 641px) {
+    .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .timeline-item::before { content: ''; position: absolute; left: -39px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--red); border: 2px solid var(--white); box-shadow: 0 0 0 2px var(--red); }
+  .timeline-year { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--red); font-weight: 500; margin-bottom: 4px; }
+  .timeline-item h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .timeline-item p { font-size: 13px; color: var(--gray-700); line-height: 1.6; max-width: 600px; }
+
+  /* MISSION VALUES */
+  .mission-section { background: var(--gray-100); padding: 64px 40px; border-bottom: 1px solid var(--gray-200); }
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .mission-left h2 { font-family: var(--serif); font-size: 34px; font-weight: 400; margin-bottom: 16px; }
+  .mission-left p { font-size: 14px; color: var(--gray-700); line-height: 1.7; margin-bottom: 14px; }
+  .values-list { display: flex; flex-direction: column; gap: 12px; }
+  .value-item { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
+  .value-num { font-family: var(--serif); font-size: 22px; color: var(--red); flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .value-text h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .value-text p { font-size: 12px; color: var(--gray-700); line-height: 1.55; }
+
+  /* QUOTE */
+  .quote-section { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; padding: 64px 40px; background: var(--white); border-radius: var(--radius-lg); }
+  .quote-portrait { width: 100%; min-height: 420px; border-radius: var(--radius-lg); overflow: hidden; position: relative; }
+  .quote-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: right center; display: block; }
+  .quote-mark { font-family: var(--serif); font-size: 72px; color: var(--text); line-height: .8; margin-bottom: 18px; }
+  .quote-text { font-size: 20px; line-height: 1.7; color: var(--text); max-width: 100%; margin-bottom: 24px; }
+  .quote-attr { font-size: 14px; color: var(--gray-700); }
+  @media(max-width:900px) { .quote-section { grid-template-columns: 1fr; padding: 40px 24px; } .quote-portrait { min-height: 320px; } .quote-portrait img { object-position: right center; } }
+
+  /* LEADERSHIP */
+  .leadership-section { padding: 64px 80px; border-bottom: 1px solid var(--gray-200); }
+  .leadership-section h2 { font-family: var(--serif); font-size: 34px; font-weight: 400; margin-bottom: 8px; }
+  .leadership-section .sub { font-size: 14px; color: var(--gray-700); margin-bottom: 36px; }
+  .leaders-grid { display: grid; gap: 32px; max-width: 1200px; margin: 0 auto; }
+  .leader-row { display: flex; align-items: center; justify-content: center; gap: 32px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 32px; }
+  .leader-row.reverse { flex-direction: row-reverse; }
+  .leader-avatar { width: 220px; height: 220px; min-width: 220px; border-radius: 50%; background-size: cover; background-position: center; box-shadow: 0 24px 50px rgba(0,0,0,.1); position: relative; overflow: hidden; }
+  .leader-avatar::after { content: attr(data-role); position: absolute; bottom: 18px; left: 18px; right: 18px; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #fff; opacity: .9; }
+  .leader-info { max-width: 620px; text-align: left; }
+  .leader-info h3 { font-size: 28px; margin-bottom: 12px; line-height: 1.1; }
+  .leader-info p { color: var(--gray-700); font-size: 15px; line-height: 1.8; margin-bottom: 14px; }
+  .leader-info .leader-title { font-weight: 600; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--red); }
+  @media(max-width:900px) { .leader-row, .leader-row.reverse { flex-direction: column; text-align: center; } .leader-avatar { margin: 0 auto; } .leader-info { max-width: 100%; text-align: center; } }
+  .av1 { background: linear-gradient(160deg, #2c4a5a 0%, #1a2d38 100%); }
+  .av2 { background: linear-gradient(160deg, #3d3a2e 0%, #252318 100%); }
+  .av3 { background: linear-gradient(160deg, #3a2d4a 0%, #231a2e 100%); }
+  .av4 { background: linear-gradient(160deg, #2e4a3e 0%, #1a2e28 100%); }
+
+  /* TABLET (641px – 900px) */
+  @media (min-width: 641px) and (max-width: 900px) {
+    .page-hero { grid-template-columns: 1fr; padding: 56px 32px 48px; gap: 36px; }
+    .page-hero h1 { font-size: clamp(38px, 6vw, 48px); }
+    .hero-stat-grid { grid-template-columns: 1fr 1fr; }
+    .history-section,
+    .mission-section,
+    .leadership-section,
+    .awards-section { padding: 48px 32px; }
+    .quote-section { padding: 48px 32px; }
+    .mission-grid { grid-template-columns: 1fr; gap: 36px; }
+    .awards-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .leader-row,
+    .leader-row.reverse { flex-direction: column; text-align: center; }
+    .leader-avatar { margin: 0 auto; }
+    .leader-info { max-width: 100%; }
+  }
+
+  /* MOBILE (≤ 640px) */
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .page-hero { grid-template-columns: 1fr; padding: 40px 20px 32px; gap: 28px; }
+    .page-hero h1 { font-size: clamp(28px, 8vw, 36px); }
+    .page-hero p { font-size: 15px; }
+    .hero-stat-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .hero-stat { padding: 16px; }
+    .hero-stat-num { font-size: 26px; }
+    .history-section,
+    .mission-section,
+    .leadership-section,
+    .awards-section { padding: 32px 20px; }
+    .quote-section { padding: 32px 20px; }
+    .history-section h2,
+    .mission-left h2,
+    .leadership-section h2,
+    .awards-section h2 { font-size: 26px; }
+    .timeline-column { padding-left: 20px; }
+    .timeline-item::before { left: -27px; width: 10px; height: 10px; }
+    .mission-grid { grid-template-columns: 1fr; gap: 28px; }
+    .quote-section { grid-template-columns: 1fr; gap: 24px; }
+    .quote-portrait { min-height: 260px; }
+    .quote-mark { font-size: 56px; }
+    .quote-text { font-size: 17px; }
+    .leader-row,
+    .leader-row.reverse { flex-direction: column; text-align: center; padding: 22px; }
+    .leader-avatar { margin: 0 auto; width: 160px; height: 160px; min-width: 160px; }
+    .leader-info { max-width: 100%; }
+    .leader-info h3 { font-size: 22px; }
+    .awards-grid { grid-template-columns: 1fr; }
+    .award-card { padding: 20px; }
+    footer { padding: 32px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  }
+
+  /* VERY SMALL (≤ 380px) */
+  @media (max-width: 380px) {
+    .hero-stat-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  /* AWARDS */
+  .awards-section { position: relative; background: #141210; color: var(--white); padding: 64px 40px; }
+  .awards-section .section-tag { color: var(--red); }
+  .awards-section h2 { font-family: var(--serif); font-size: 34px; font-weight: 400; margin-bottom: 8px; }
+  .awards-section .sub { font-size: 14px; color: #888; margin-bottom: 36px; }
+  .awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .award-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 24px; }
+  .award-year { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+  .award-card h4 { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 6px; line-height: 1.4; }
+  .award-card p { font-size: 12px; color: #888; line-height: 1.5; }
+
+  @media (max-width: 900px) {
+    .awards-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .awards-grid { grid-template-columns: 1fr; }
+  }  
+  </style>
+
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="page-hero">
+
+  <div>
+    <div class="hero-eyebrow">About us</div>
+    <h1>Changing lives through opportunity</h1>
+    <p>Founded in 2001, Torvu is one of the world's largest development organisations, connect individuals with opportunities that equips thousands of Americans with tools and resources they need to live their best lives.</p>
+  </div>
+  <div class="hero-stat-grid">
+    <div class="hero-stat">
+      <div class="hero-stat-num">2001</div>
+      <div class="hero-stat-label">Year Torvu was founded in the United States</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100,000+</div>
+      <div class="hero-stat-label">Individuals supported through employment and workforce development programs</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">75%</div>
+      <div class="hero-stat-label">Individuals who found employment through Torvu's programs withing 6 months</div>
+    </div>
+  </div>
+</div>
+
+
+<section class="history-section">
+  <div class="section-tag">Our history</div>
+  <h2>Over 20 years of impact</h2>
+  <p class="sub">What began as a small community initiative in the aftermath of September 11, 2001 has grown into a national movement helping Americans overcome barriers to employment and achieve lasting economic independence.</p>
+  <div class="timeline">
+    <div class="timeline-column">
+      <div class="timeline-item">
+        <div class="timeline-year">2001</div>
+        <h3>Founded in the United States</h3>
+        <p style="margin-bottom: 5px;">In the weeks following the September 11 attacks, thousands of Americans faced uncertainty, job loss, financial hardship, and disruption to their lives.</p>
+        <p>Torvu was established to help individuals and families regain stability through emergency assistance, workforce support, and community-based recovery efforts.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2009</div>
+        <h3>Responding to the Great Recession</h3>
+        <p style="margin-bottom: 5px;">The financial crisis brought widespread unemployment and economic hardship across the country.</p>
+        <p style="margin-bottom: 5px;">Torvu expanded its services to help displaced workers transition into new careers through skills training, workforce development partnerships, and employment placement programs.</p>
+        <p style="margin-bottom: 5px;">Demand for assistance grew rapidly as communities sought practical pathways back to work.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2015</div>
+        <h3>Building Employer Partnerships</h3>
+        <p style="margin-bottom: 5px;">Recognizing that sustainable change requires strong connections between job seekers and employers, Torvu established a national employer partnership initiative.</p>
+        <p style="margin-bottom: 5px;">Businesses across multiple industries joined the network, creating opportunities for veterans, single parents, individuals with disabilities, returning citizens, and others facing barriers to employment.</p>
+        <p style="margin-bottom: 5px;">This marked a major step toward creating direct pathways from training to employment.</p>
+      </div>
+    </div>
+    <div class="timeline-column">
+      <div class="timeline-item">
+        <div class="timeline-year">2020</div>
+        <h3>Supporting Communities Through the Pandemic</h3>
+        <p style="margin-bottom: 5px;">The COVID-19 pandemic disrupted the workforce on an unprecedented scale.</p>
+        <p style="margin-bottom: 5px;">Torvu adapted quickly, launching virtual career services, remote skills training, digital literacy programs, and emergency employment support for individuals affected by layoffs and business closures.</p>
+        <p style="margin-bottom: 5px;">Thousands of Americans received assistance during one of the most challenging economic periods in recent history.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <h3>Expanding Access to Opportunity</h3>
+        <p style="margin-bottom: 5px;">Torvu introduced new programs focused on career advancement, financial stability, mentorship, and workforce inclusion.</p>
+        <p style="margin-bottom: 5px;">Through partnerships with employers, community organizations, educational institutions, and workforce agencies, the organization expanded its reach and impact across the United States.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Today</div>
+        <h3>A National Workforce Opportunity Network</h3>
+        <p style="margin-bottom: 5px;">Today, Torvu operates a growing ecosystem of workforce development programs, employer partnerships, career resources, and community initiatives dedicated to one mission:</p>
+        <p style="margin-bottom: 5px;">Helping Americans overcome barriers to employment and build stable, prosperous futures.</p>
+        <p style="margin-bottom: 5px;">Every service remains free to participants, ensuring that opportunity is accessible to those who need it most.</p>
+        <p style="margin-bottom: 5px;">As we look ahead, our goal remains unchanged: connecting people with the skills, support, and opportunities they need to thrive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="spacer layer2"></div>
+<section class="mission-section">
+  <div class="mission-grid">
+    <div class="mission-left">
+      <div class="section-tag">Vision &amp; Mission</div>
+      <h2>A future where everyone has the opportunity to thrive through meaningful work</h2>
+      <p>Torvu's mission is to help individuals overcome barriers to employment, achieve financial stability, and build pathways to long-term career success.</p>
+      <p>We do this through workforce development programs, career coaching, skills training, employer partnerships, and supportive services that connect people with real opportunities for economic mobility.</p>
+      <p>At the heart of everything is a simple belief: given the right support, resources, and opportunities, every person can build a better future for themselves, their families, and their communities.</p>
+    </div>
+    <div>
+      <div class="section-tag">Our values</div>
+      <div class="values-list">
+        <div class="value-item">
+          <div class="value-num">1</div>
+          <div class="value-text"><h4>Integrity</h4><p>We act with honesty, accountability, and transparency in everything we do. We earn trust by treating participants, partners, employers, donors, and communities with respect and professionalism.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">2</div>
+          <div class="value-text"><h4>Opportunity</h4><p>We believe everyone deserves access to meaningful employment and the chance to achieve economic independence, regardless of the obstacles they have faced.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">3</div>
+          <div class="value-text"><h4>Inclusion</h4><p>We create pathways for individuals who have historically been excluded from economic opportunity, including veterans, people with disabilities, returning citizens, single parents, and others facing barriers to employment.</p></div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">4</div>
+          <div class="value-text"><h4>Impact</h4><p>We focus on measurable outcomes that improve lives. Through continuous learning, innovation, and evidence-based programs, we help individuals secure employment, increase earnings, and build lasting career success.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section">
+        <div class="quote-portrait">
+          <img src="{% static 'img/ten.avif' %}" alt="Torvu Founder Sir Fazle Hasan Abed"
+            style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+                  {% include "common/curve2.html" %}
+
+        </div>
+        <div>
+          <div class="quote-mark">&ldquo;</div>
+          <p class="quote-text">For too long, people thought poverty was something ordained by a higher power, as
+            immutable as the sun and the moon. This is a myth. Giving people hope and self-esteem may be the greatest
+            investment in human capital.</p>
+          <div class="quote-attr">
+            <strong>Sir Fazle Hasan Abed</strong>Founder, Torvu
+          </div>
+        </div>
+      </section>
+
+<section class="leadership-section">
+  <div class="section-tag">Leadership</div>
+  <h2>The People Guiding Torvu</h2>
+  <p class="sub">Our leadership team brings together decades of experience in workforce development, nonprofit leadership, employer engagement, education, and economic mobility.</p>
+  <div class="leaders-grid">
+    <div class="leader-row">
+      <div class="leader-avatar av1">
+        <img src="{% static 'img/leadership4.avif' %}" alt="Michael Carter, President & Chief Executive Officer" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+      </div>
+      <div class="leader-info">
+        <div class="leader-title">Michael Carter</div>
+        <h3>President & Chief Executive Officer</h3>
+        <p>Michael leads Torvu's national strategy and operations, overseeing programs that connect individuals with employment opportunities, workforce training, and long-term career advancement pathways.</p>
+        <p>With more than two decades of experience in workforce development and nonprofit leadership, he is dedicated to building innovative solutions that help people overcome barriers to economic opportunity.</p>
+      </div>
+    </div>
+    <div class="leader-row reverse">
+      <div class="leader-avatar av2">
+        <img src="{% static 'img/leadership2.avif' %}" alt="Jennifer Rodriguez, Chief Program Officer" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+      </div>
+      <div class="leader-info">
+        <div class="leader-title">Jennifer Rodriguez</div>
+        <h3>Chief Program Officer</h3>
+        <p>Jennifer oversees Torvu's workforce development initiatives, career readiness programs, and participant support services.</p>
+        <p>She works closely with community partners, educational institutions, and workforce agencies to ensure individuals receive the training, resources, and guidance needed to achieve sustainable employment.</p>
+      </div>
+    </div>
+    <div class="leader-row">
+      <div class="leader-avatar av3">
+        <img src="{% static 'img/leadership3.avif' %}" alt="David Thompson, Chief Partnerships Officer" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+      </div>
+      <div class="leader-info">
+        <div class="leader-title">David Thompson</div>
+        <h3>Chief Partnerships Officer</h3>
+        <p>David leads employer engagement and strategic partnerships across the United States.</p>
+        <p>He collaborates with businesses, industry leaders, and workforce stakeholders to create employment pathways that connect skilled job seekers with organizations seeking diverse and talented employees.</p>
+      </div>
+    </div>
+    <div class="leader-row reverse">
+      <div class="leader-avatar av4">
+        <img src="{% static 'img/leadership1.avif' %}" alt="Dr. Angela Brooks, Chair, Board of Directors" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">
+      </div>
+      <div class="leader-info">
+        <div class="leader-title">Dr. Angela Brooks</div>
+        <h3>Chair, Board of Directors</h3>
+        <p>Dr. Brooks provides governance and strategic oversight for Torvu's mission and long-term growth.</p>
+        <p>A recognized leader in workforce policy and economic development, she helps ensure the organization remains focused on measurable impact, accountability, and expanding access to opportunity for underserved communities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="awards-section">
+        {% include "common/curve2.html" %}
+
+  <div class="section-tag">Recognition</div>
+  <h2>Awards &amp; Recognition</h2>
+  <p class="sub">Torvu's commitment to expanding economic opportunity and workforce mobility has earned recognition from employers, community partners, workforce leaders, and nonprofit organizations across the United States.</p>
+  <div class="awards-grid">
+    <div class="award-card">
+      <div class="award-year">2026</div>
+      <h4>National Workforce Innovation Award</h4>
+      <p>Recognized for developing innovative workforce programs that help individuals overcome barriers to employment and achieve long-term career success.</p>
+    </div>
+    <div class="award-card">
+      <div class="award-year">2024</div>
+      <h4>Excellence in Economic Mobility</h4>
+      <p>Honored for expanding access to workforce training, career coaching, and employment opportunities for underserved communities across the country.</p>
+    </div>
+    <div class="award-card">
+      <div class="award-year">2022</div>
+      <h4>Community Impact Leadership Award</h4>
+      <p>Recognized for helping thousands of individuals secure employment, increase earnings, and build pathways toward financial stability.</p>
+    </div>
+    <div class="award-card">
+      <div class="award-year">2020</div>
+      <h4>Workforce Recovery Initiative Recognition</h4>
+      <p>Acknowledged for providing virtual career services, digital skills training, and employment support to individuals affected by pandemic-related job losses.</p>
+    </div>
+    <div class="award-card">
+      <div class="award-year">Ongoing Recognition</div>
+      <h4>Trusted by Employers and Community Partners</h4>
+      <p>Torvu continues to be recognized for building strong partnerships between employers, workforce agencies, educational institutions, and community organizations that create meaningful employment opportunities and lasting economic impact.</p>
+    </div>
+  </div>
+</section>
+
+{% include "common/contact.html" %}
+
+{% endblock %}

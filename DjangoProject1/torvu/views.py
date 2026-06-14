@@ -1,6 +1,9 @@
 from django.views.decorators.cache import never_cache
 from django.shortcuts import render, redirect
 
+from django.shortcuts import get_object_or_404, render
+from .models import Post
+
 from torvu.models import my_photos, RequestAssistanceModel
 
 
@@ -8,7 +11,16 @@ from torvu.models import my_photos, RequestAssistanceModel
 
 
 def home(request):
-    return render(request, 'index.html', {})
+    good_feed_posts = Post.objects.filter(post_type=Post.Post_Type.GOOD_FEED).order_by('-created_at')[:6]
+    news_posts = Post.objects.filter(post_type=Post.Post_Type.NEWS).order_by('-created_at')[:6]
+    guide_posts = Post.objects.filter(post_type=Post.Post_Type.GUIDE).order_by('-created_at')[:6]
+    testimonial_posts = Post.objects.filter(post_type=Post.Post_Type.TESTIMONIAL).order_by('-created_at')[:6]
+    return render(request, 'index.html', {
+        'good_feed_posts': good_feed_posts,
+        'news_posts': news_posts,
+        'guide_posts': guide_posts,
+        'testimonial_posts': testimonial_posts,
+    })
 
 @never_cache
 def request_assistance_form(request):
@@ -80,3 +92,54 @@ def dummy_form(request):
 
 def success_page(request):
     return render(request, 'success_page.html', {})
+
+
+def blog_post1(request):
+    blogs = Post.objects.all()
+    return render(request, 'blog_post.html', {'blogs': blogs})
+
+
+# views.py
+
+def blog_post(request, slug):
+    post = get_object_or_404(
+        Post.objects.prefetch_related('blocks', 'tags'),
+        slug=slug,
+    )
+    featured = Post.objects.all().exclude(pk=post.pk).order_by('-created_at')[:6]
+
+    return render(request, 'blog/post.html', {
+        'post': post,
+        'featured': featured,
+    })
+
+def blog_tag(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    posts = Post.objects.filter(
+        tags=tag,
+        status=Post.Status.PUBLISHED
+    ).order_by('-created_at')
+
+    return render(request, 'blog/tag.html', {
+        'tag': tag,
+        'posts': posts,
+    })
+
+def stay_informed(request):
+    feel_good_posts = Post.objects.filter(post_type=Post.Post_Type.GOOD_FEED).order_by('-created_at')[:6]
+    news_posts = Post.objects.filter(post_type=Post.Post_Type.NEWS).order_by('-created_at')[:6]
+    testimonials = Post.objects.filter(post_type=Post.Post_Type.TESTIMONIAL).order_by('-created_at')[:6]
+    guides = Post.objects.filter(post_type=Post.Post_Type.GUIDE).order_by('-created_at')[:6]
+    return render(request, 'stay_informed_page.html', {
+        'feel_good_posts': feel_good_posts,
+        'news_posts': news_posts,
+        'testimonials': testimonials,
+        'guides': guides
+        })
+
+
+def about(request):
+    return render(request, 'about_page.html', {})
+
+def contact(request):
+    return render(request, 'contact_page.html', {})
