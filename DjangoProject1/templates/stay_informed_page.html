@@ -4,529 +4,1283 @@
 {% block title %}Stay Informed — Torvu{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-  <style>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <style>
 
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --red:#c0392b;--red-dark:#96281b;--white:#fff;
-  --gray-100:#f5f4f0;--gray-200:#e8e6e0;--gray-400:#a0998c;--gray-700:#4a4740;--text:#1a1917;
-  --serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
-  --radius:10px;--radius-lg:16px;--px:clamp(16px,4vw,48px);
-}
-body{font-family:var(--sans);color:var(--text);background:var(--white);font-size:15px;line-height:1.6;overflow-x:hidden}
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
 
-.section-tag{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--gray-400);margin-bottom:8px;font-weight:500}
-.section-h2{font-family:var(--serif);font-size:clamp(22px,4vw,30px);font-weight:400;margin-bottom:10px;line-height:1.15}
-.section-desc{font-size:15px;color:var(--gray-700);line-height:1.75;max-width:600px;margin-bottom:28px}
-.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
-@media(max-width:640px){.section-head{flex-direction:column;align-items:flex-start}}
-.section-wrap{padding:clamp(40px,6vw,64px) var(--px)}
-.section-wrap.gray{background:var(--gray-100);border-top:1px solid var(--gray-200)}
-.section-wrap.white{background:var(--white);border-top:1px solid var(--gray-200)}
+        :root {
+            --red: #c0392b;
+            --red-dark: #96281b;
+            --white: #fff;
+            --gray-100: #f5f4f0;
+            --gray-200: #e8e6e0;
+            --gray-400: #a0998c;
+            --gray-700: #4a4740;
+            --text: #1a1917;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --sans: 'DM Sans', system-ui, sans-serif;
+            --radius: 10px;
+            --radius-lg: 16px;
+            --px: clamp(16px, 4vw, 48px);
+        }
 
-/* PAGE HERO */
-.page-hero{position:relative;height:clamp(260px,45vw,360px);overflow:hidden;background:linear-gradient(160deg,#1a3a2a 0%,#0d1f16 60%,#060e09 100%)}
-.page-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 20%,rgba(0,0,0,.7) 100%)}
-.page-hero-content{position:absolute;bottom:0;left:0;right:0;padding:clamp(20px,4vw,40px) var(--px) clamp(28px,5vw,44px);max-width:780px}
-.page-hero-tag{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--red);background:rgba(255,255,255,.08);border:1px solid rgba(192,57,43,.45);border-radius:999px;padding:4px 13px;margin-bottom:10px;font-weight:500}
-.page-hero-title{font-family:var(--serif);font-size:clamp(22px,5vw,40px);color:var(--white);line-height:1.12;margin-bottom:10px;font-weight:400}
-.page-hero-sub{font-size:clamp(13px,2vw,15px);color:rgba(255,255,255,.6);max-width:520px;line-height:1.65}
+        body {
+            font-family: var(--sans);
+            color: var(--text);
+            background: var(--white);
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-x: hidden
+        }
 
-/* SHARED OVERLAY CARD */
-.story-card{position:relative;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;background:#1a1917;text-decoration:none;display:block}
-.iph{width:100%;height:100%;display:block}
-.card-base{position:absolute;bottom:0;left:0;right:0;padding:36px 14px 14px;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,transparent 100%);pointer-events:none}
-.card-base-tag{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-weight:500;margin-bottom:4px}
-.card-base-title{font-size:13px;color:var(--white);font-weight:500;line-height:1.4}
-.card-overlay{position:absolute;inset:0;background:rgba(20,18,16,.9);opacity:0;transition:opacity .3s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;pointer-events:none}
-.story-card:hover .card-overlay,.story-card:focus .card-overlay{opacity:1;pointer-events:auto}
-.ov-tag{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-weight:500;margin-bottom:6px}
-.ov-title{font-family:var(--serif);font-size:clamp(14px,2vw,16px);color:var(--white);line-height:1.3;margin-bottom:7px}
-.ov-desc{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;margin-bottom:12px}
-.btn-rm{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:var(--white);border:none;border-radius:var(--radius);padding:7px 13px;font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;text-decoration:none;flex-shrink:0}
+        .section-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray-400);
+            margin-bottom: 8px;
+            font-weight: 500
+        }
 
-/* IMAGE PLACEHOLDER GRADIENTS */
-.g1{background:linear-gradient(155deg,#1e3a28,#0d1f16)}
-.g2{background:linear-gradient(155deg,#3a2d4a,#1e1528)}
-.g3{background:linear-gradient(155deg,#4a3728,#261c12)}
-.g4{background:linear-gradient(155deg,#2c3e4a,#141e28)}
-.g5{background:linear-gradient(155deg,#3d5a3e,#1e2e1f)}
-.g6{background:linear-gradient(155deg,#4a453a,#261f14)}
-.g7{background:linear-gradient(155deg,#2e4852,#14222a)}
-.g8{background:linear-gradient(155deg,#3a2c4a,#1e1227)}
+        .section-h2 {
+            font-family: var(--serif);
+            font-size: clamp(22px, 4vw, 30px);
+            font-weight: 400;
+            margin-bottom: 10px;
+            line-height: 1.15
+        }
 
-/* ── STORIES GRID ── */
-.stories-hero-row{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
-.stories-hero-row .big-card{aspect-ratio:16/9}
-.stories-hero-row .small-stack{display:grid;grid-template-columns:1fr;gap:14px}
-.stories-hero-row .small-stack .story-card{aspect-ratio:4/3}
-@media(min-width:640px){
-  .stories-hero-row{grid-template-columns:1.5fr 1fr}
-  .stories-hero-row .small-stack{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
-  .stories-hero-row .small-stack .story-card{aspect-ratio:unset;flex:1}
-}
-.stories-bottom-row{display:grid;grid-template-columns:1fr;gap:14px}
-.stories-bottom-row .story-card{aspect-ratio:4/3}
-@media(min-width:640px){
-  .stories-bottom-row{grid-template-columns:1fr 1fr}
-}
-@media(min-width:768px){
-  .stories-bottom-row{grid-template-columns:repeat(3,1fr)}
-}
+        .section-desc {
+            font-size: 15px;
+            color: var(--gray-700);
+            line-height: 1.75;
+            max-width: 600px;
+            margin-bottom: 28px
+        }
 
-/* ── DARK STRIP ── */
-.dark-strip{background:#141210;padding:clamp(36px,5vw,52px) var(--px)}
-.ds-inner{display:grid;grid-template-columns:1fr;gap:24px}
-@media(min-width:640px){.ds-inner{grid-template-columns:auto 1fr;gap:40px;align-items:center}}
-.ds-year{font-family:var(--serif);font-size:clamp(36px,8vw,60px);color:var(--red);line-height:1}
-.ds-label{font-size:12px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
-.ds-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,28px)}
-.ds-stat-num{font-family:var(--serif);font-size:clamp(22px,4vw,28px);color:var(--white);line-height:1;margin-bottom:4px}
-.ds-stat-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
+        .section-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 14px
+        }
 
-/* ── NEWS CAROUSEL ── */
-.news-carousel-wrap{position:relative}
-.news-carousel{display:flex;gap:16px;overflow:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-.news-card{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--gray-200);background:var(--white);position:relative;cursor:pointer;display:block;text-decoration:none;flex:0 0 calc(85% - 8px);scroll-snap-align:start;min-width:0}
-@media(min-width:540px){.news-card{flex:0 0 calc(50% - 8px)}}
-@media(min-width:900px){.news-card{flex:0 0 calc(25% - 12px)}}
-.news-card-img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s ease}
-.news-card:hover .news-card-img{transform:scale(1.04)}
-.news-card-body{padding:16px}
-.news-type{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-weight:500;margin-bottom:6px}
-.news-card-body h4{font-size:15px;font-weight:500;line-height:1.4;margin-bottom:7px;color:var(--text)}
-.news-date{font-size:11px;color:var(--gray-400)}
-.news-overlay{position:absolute;inset:0;background:rgba(20,18,16,.9);opacity:0;transition:opacity .3s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;pointer-events:none}
-.news-card:hover .news-overlay,.news-card:focus .news-overlay{opacity:1;pointer-events:auto}
-.carousel-controls{display:flex;align-items:center;gap:10px;margin-top:18px}
-.carousel-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--gray-200);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-700);transition:background .2s,border-color .2s;flex-shrink:0;font-size:16px}
-.carousel-btn:hover{background:var(--gray-100);border-color:var(--gray-400)}
-.carousel-btn:disabled{opacity:.3;cursor:default}
-.carousel-dots{display:flex;gap:6px;align-items:center}
-.carousel-dot{width:7px;height:7px;border-radius:50%;background:var(--gray-200);border:none;cursor:pointer;padding:0;transition:background .2s,transform .2s}
-.carousel-dot.active{background:var(--red);transform:scale(1.25)}
+        @media (max-width: 640px) {
+            .section-head {
+                flex-direction: column;
+                align-items: flex-start
+            }
+        }
 
-/* ── TESTIMONIALS ── */
-.test-grid-top{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
-@media(min-width:640px){.test-grid-top{grid-template-columns:1fr 1fr}}
-.test-grid-bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(min-width:768px){.test-grid-bottom{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:640px){.test-grid-bottom{display:block;gap:18px}.test-grid-bottom .test-card{margin-bottom:18px}}
-.test-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:clamp(18px,3vw,24px);position:relative;cursor:pointer;overflow:hidden}
-.test-card.dark{background:#141210;border-color:#222}
-.test-card-overlay{position:absolute;inset:0;background:rgba(20,18,16,.92);opacity:0;transition:opacity .3s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;pointer-events:none}
-.test-card:hover .test-card-overlay,.test-card:focus .test-card-overlay{opacity:1;pointer-events:auto}
-.test-qmark{font-family:var(--serif);font-size:48px;color:var(--red);line-height:.6;margin-bottom:10px;opacity:.35}
-.test-qmark.light{color:var(--red);opacity:.4}
-.test-quote{font-family:var(--serif);font-size:clamp(13px,2vw,15px);color:var(--gray-700);line-height:1.65;margin-bottom:16px;font-style:italic}
-.test-quote.light{color:#f0ede8;font-size:clamp(15px,2.5vw,19px)}
-.test-avatar-row{display:flex;align-items:center;gap:10px}
- .test-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;object-fit:cover;display:block}
-.av1{background:linear-gradient(135deg,#2e5935,#1a3a20)}
-.av2{background:linear-gradient(135deg,#3a2d4a,#1e1528)}
-.av3{background:linear-gradient(135deg,#4a3728,#261c12)}
-.av4{background:linear-gradient(135deg,#2c3e4a,#141e28)}
-.test-name{font-size:12px;font-weight:500;color:var(--text)}
-.test-name.light{color:#ddd}
-.test-role{font-size:11px;color:var(--gray-400)}
+        .section-wrap {
+            padding: clamp(40px, 6vw, 64px) var(--px)
+        }
 
-/* ── GUIDES ── */
-.guides-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:0}
-.guides-header .section-desc{margin-bottom:0}
-.btn-learn-more{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--red);border:1px solid var(--red);border-radius:var(--radius);padding:9px 18px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s;flex-shrink:0;align-self:flex-start}
-@media(max-width:640px){.btn-learn-more{align-self:flex-start}}
-.btn-learn-more:hover{background:var(--red);color:var(--white)}
-.guides-top-row{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px;margin-top:24px}
-@media(min-width:600px){.guides-top-row{grid-template-columns:1fr 1fr}}
-@media(min-width:900px){.guides-top-row{grid-template-columns:repeat(3,1fr)}}
-.guides-bottom-row{display:grid;grid-template-columns:1fr;gap:14px}
-@media(min-width:600px){.guides-bottom-row{grid-template-columns:1fr 1fr}}
-@media(min-width:900px){.guides-bottom-row{grid-template-columns:repeat(4,1fr)}}
-.guide-card{position:relative;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;background:var(--white);border:1px solid var(--gray-200);display:block;text-decoration:none}
-.guide-card-img{width:100%;height:clamp(100px,20vw,180px);object-fit:cover;display:block;transition:transform .45s cubic-bezier(.4,0,.2,1)}
-.guide-card:hover .guide-card-img{transform:scale(1.05)}
-.guide-card-body{padding:clamp(10px,2vw,16px)}
-.guide-tag{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-weight:500;margin-bottom:5px}
-.guide-title{font-size:clamp(12px,1.8vw,14px);font-weight:500;color:var(--text);line-height:1.4;margin-bottom:5px}
-.guide-meta{font-size:11px;color:var(--gray-400)}
-.guide-overlay{position:absolute;inset:0;background:rgba(20,18,16,.9);opacity:0;transition:opacity .3s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;pointer-events:none}
-.guide-card:hover .guide-overlay,.guide-card:focus .guide-overlay{opacity:1;pointer-events:auto}
+        .section-wrap.gray {
+            background: var(--gray-100);
+            border-top: 1px solid var(--gray-200)
+        }
 
-  </style>
+        .section-wrap.white {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200)
+        }
+
+        /* PAGE HERO */
+        .page-hero {
+            position: relative;
+            height: clamp(260px, 45vw, 360px);
+            overflow: hidden;
+            background: linear-gradient(160deg, #1a3a2a 0%, #0d1f16 60%, #060e09 100%)
+        }
+
+        .page-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, .05) 20%, rgba(0, 0, 0, .7) 100%)
+        }
+
+        .page-hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: clamp(20px, 4vw, 40px) var(--px) clamp(28px, 5vw, 44px);
+            max-width: 780px
+        }
+
+        .page-hero-tag {
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--red);
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(192, 57, 43, .45);
+            border-radius: 999px;
+            padding: 4px 13px;
+            margin-bottom: 10px;
+            font-weight: 500
+        }
+
+        .page-hero-title {
+            font-family: var(--serif);
+            font-size: clamp(22px, 5vw, 40px);
+            color: var(--white);
+            line-height: 1.12;
+            margin-bottom: 10px;
+            font-weight: 400
+        }
+
+        .page-hero-sub {
+            font-size: clamp(13px, 2vw, 15px);
+            color: rgba(255, 255, 255, .6);
+            max-width: 520px;
+            line-height: 1.65
+        }
+
+        /* SHARED OVERLAY CARD */
+        .story-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            background: #1a1917;
+            text-decoration: none;
+            display: block
+        }
+
+        .iph {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .card-base {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 36px 14px 14px;
+            background: linear-gradient(to top, rgba(0, 0, 0, .82) 0%, transparent 100%);
+            pointer-events: none
+        }
+
+        .card-base-tag {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--red);
+            font-weight: 500;
+            margin-bottom: 4px
+        }
+
+        .card-base-title {
+            font-size: 13px;
+            color: var(--white);
+            font-weight: 500;
+            line-height: 1.4
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 18, 16, .9);
+            opacity: 0;
+            transition: opacity .3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+            pointer-events: none
+        }
+
+        .story-card:hover .card-overlay, .story-card:focus .card-overlay {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .ov-tag {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--red);
+            font-weight: 500;
+            margin-bottom: 6px
+        }
+
+        .ov-title {
+            font-family: var(--serif);
+            font-size: clamp(14px, 2vw, 16px);
+            color: var(--white);
+            line-height: 1.3;
+            margin-bottom: 7px
+        }
+
+        .ov-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .65);
+            line-height: 1.5;
+            margin-bottom: 12px
+        }
+
+        .btn-rm {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            padding: 7px 13px;
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            flex-shrink: 0
+        }
+
+        /* IMAGE PLACEHOLDER GRADIENTS */
+        .g1 {
+            background: linear-gradient(155deg, #1e3a28, #0d1f16)
+        }
+
+        .g2 {
+            background: linear-gradient(155deg, #3a2d4a, #1e1528)
+        }
+
+        .g3 {
+            background: linear-gradient(155deg, #4a3728, #261c12)
+        }
+
+        .g4 {
+            background: linear-gradient(155deg, #2c3e4a, #141e28)
+        }
+
+        .g5 {
+            background: linear-gradient(155deg, #3d5a3e, #1e2e1f)
+        }
+
+        .g6 {
+            background: linear-gradient(155deg, #4a453a, #261f14)
+        }
+
+        .g7 {
+            background: linear-gradient(155deg, #2e4852, #14222a)
+        }
+
+        .g8 {
+            background: linear-gradient(155deg, #3a2c4a, #1e1227)
+        }
+
+        /* ── STORIES GRID ── */
+        .stories-hero-row {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 14px;
+            margin-bottom: 14px
+        }
+
+        .stories-hero-row .big-card {
+            aspect-ratio: 16/9
+        }
+
+        .stories-hero-row .small-stack {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 14px
+        }
+
+        .stories-hero-row .small-stack .story-card {
+            aspect-ratio: 4/3
+        }
+
+        @media (min-width: 640px) {
+            .stories-hero-row {
+                grid-template-columns:1.5fr 1fr
+            }
+
+            .stories-hero-row .small-stack {
+                grid-template-columns:1fr;
+                grid-template-rows:1fr 1fr
+            }
+
+            .stories-hero-row .small-stack .story-card {
+                aspect-ratio: unset;
+                flex: 1
+            }
+        }
+
+        .stories-bottom-row {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 14px
+        }
+
+        .stories-bottom-row .story-card {
+            aspect-ratio: 4/3
+        }
+
+        @media (min-width: 640px) {
+            .stories-bottom-row {
+                grid-template-columns:1fr 1fr
+            }
+        }
+
+        @media (min-width: 768px) {
+            .stories-bottom-row {
+                grid-template-columns:repeat(3, 1fr)
+            }
+        }
+
+        /* ── DARK STRIP ── */
+        .dark-strip {
+            background: #141210;
+            padding: clamp(36px, 5vw, 52px) var(--px)
+        }
+
+        .ds-inner {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 24px
+        }
+
+        @media (min-width: 640px) {
+            .ds-inner {
+                grid-template-columns:auto 1fr;
+                gap: 40px;
+                align-items: center
+            }
+        }
+
+        .ds-year {
+            font-family: var(--serif);
+            font-size: clamp(36px, 8vw, 60px);
+            color: var(--red);
+            line-height: 1
+        }
+
+        .ds-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .4);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px
+        }
+
+        .ds-stats {
+            display: grid;
+            grid-template-columns:repeat(3, 1fr);
+            gap: clamp(16px, 3vw, 28px)
+        }
+
+        .ds-stat-num {
+            font-family: var(--serif);
+            font-size: clamp(22px, 4vw, 28px);
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 4px
+        }
+
+        .ds-stat-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .45);
+            line-height: 1.5
+        }
+
+        /* ── NEWS CAROUSEL ── */
+        .news-carousel-wrap {
+            position: relative
+        }
+
+        .news-carousel {
+            display: flex;
+            gap: 16px;
+            overflow: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch
+        }
+
+        .news-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            position: relative;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            flex: 0 0 calc(85% - 8px);
+            scroll-snap-align: start;
+            min-width: 0
+        }
+
+        @media (min-width: 540px) {
+            .news-card {
+                flex: 0 0 calc(50% - 8px)
+            }
+        }
+
+        @media (min-width: 900px) {
+            .news-card {
+                flex: 0 0 calc(25% - 12px)
+            }
+        }
+
+        .news-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform .4s ease
+        }
+
+        .news-card:hover .news-card-img {
+            transform: scale(1.04)
+        }
+
+        .news-card-body {
+            padding: 16px
+        }
+
+        .news-type {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--red);
+            font-weight: 500;
+            margin-bottom: 6px
+        }
+
+        .news-card-body h4 {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 7px;
+            color: var(--text)
+        }
+
+        .news-date {
+            font-size: 11px;
+            color: var(--gray-400)
+        }
+
+        .news-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 18, 16, .9);
+            opacity: 0;
+            transition: opacity .3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+            pointer-events: none
+        }
+
+        .news-card:hover .news-overlay, .news-card:focus .news-overlay {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px
+        }
+
+        .carousel-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-700);
+            transition: background .2s, border-color .2s;
+            flex-shrink: 0;
+            font-size: 16px
+        }
+
+        .carousel-btn:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400)
+        }
+
+        .carousel-btn:disabled {
+            opacity: .3;
+            cursor: default
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: background .2s, transform .2s
+        }
+
+        .carousel-dot.active {
+            background: var(--red);
+            transform: scale(1.25)
+        }
+
+        /* ── TESTIMONIALS ── */
+        .test-grid-top {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 14px;
+            margin-bottom: 14px
+        }
+
+        @media (min-width: 640px) {
+            .test-grid-top {
+                grid-template-columns:1fr 1fr
+            }
+        }
+
+        .test-grid-bottom {
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            gap: 14px
+        }
+
+        @media (min-width: 768px) {
+            .test-grid-bottom {
+                grid-template-columns:repeat(3, 1fr)
+            }
+        }
+
+        @media (max-width: 640px) {
+            .test-grid-bottom {
+                display: block;
+                gap: 18px
+            }
+
+            .test-grid-bottom .test-card {
+                margin-bottom: 18px
+            }
+        }
+
+        .test-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: clamp(18px, 3vw, 24px);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden
+        }
+
+        .test-card.dark {
+            background: #141210;
+            border-color: #222
+        }
+
+        .test-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 18, 16, .92);
+            opacity: 0;
+            transition: opacity .3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            pointer-events: none
+        }
+
+        .test-card:hover .test-card-overlay, .test-card:focus .test-card-overlay {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .test-qmark {
+            font-family: var(--serif);
+            font-size: 48px;
+            color: var(--red);
+            line-height: .6;
+            margin-bottom: 10px;
+            opacity: .35
+        }
+
+        .test-qmark.light {
+            color: var(--red);
+            opacity: .4
+        }
+
+        .test-quote {
+            font-family: var(--serif);
+            font-size: clamp(13px, 2vw, 15px);
+            color: var(--gray-700);
+            line-height: 1.65;
+            margin-bottom: 16px;
+            font-style: italic
+        }
+
+        .test-quote.light {
+            color: #f0ede8;
+            font-size: clamp(15px, 2.5vw, 19px)
+        }
+
+        .test-avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .test-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            object-fit: cover;
+            display: block
+        }
+
+        .av1 {
+            background: linear-gradient(135deg, #2e5935, #1a3a20)
+        }
+
+        .av2 {
+            background: linear-gradient(135deg, #3a2d4a, #1e1528)
+        }
+
+        .av3 {
+            background: linear-gradient(135deg, #4a3728, #261c12)
+        }
+
+        .av4 {
+            background: linear-gradient(135deg, #2c3e4a, #141e28)
+        }
+
+        .test-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text)
+        }
+
+        .test-name.light {
+            color: #ddd
+        }
+
+        .test-role {
+            font-size: 11px;
+            color: var(--gray-400)
+        }
+
+        /* ── GUIDES ── */
+        .guides-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 0
+        }
+
+        .guides-header .section-desc {
+            margin-bottom: 0
+        }
+
+        .btn-learn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            color: var(--red);
+            border: 1px solid var(--red);
+            border-radius: var(--radius);
+            padding: 9px 18px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .2s, color .2s;
+            flex-shrink: 0;
+            align-self: flex-start
+        }
+
+        @media (max-width: 640px) {
+            .btn-learn-more {
+                align-self: flex-start
+            }
+        }
+
+        .btn-learn-more:hover {
+            background: var(--red);
+            color: var(--white)
+        }
+
+        .guides-top-row {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+            margin-top: 24px
+        }
+
+        @media (min-width: 600px) {
+            .guides-top-row {
+                grid-template-columns:1fr 1fr
+            }
+        }
+
+        @media (min-width: 900px) {
+            .guides-top-row {
+                grid-template-columns:repeat(3, 1fr)
+            }
+        }
+
+        .guides-bottom-row {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 14px
+        }
+
+        @media (min-width: 600px) {
+            .guides-bottom-row {
+                grid-template-columns:1fr 1fr
+            }
+        }
+
+        @media (min-width: 900px) {
+            .guides-bottom-row {
+                grid-template-columns:repeat(4, 1fr)
+            }
+        }
+
+        .guide-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            display: block;
+            text-decoration: none
+        }
+
+        .guide-card-img {
+            width: 100%;
+            height: clamp(100px, 20vw, 180px);
+            object-fit: cover;
+            display: block;
+            transition: transform .45s cubic-bezier(.4, 0, .2, 1)
+        }
+
+        .guide-card:hover .guide-card-img {
+            transform: scale(1.05)
+        }
+
+        .guide-card-body {
+            padding: clamp(10px, 2vw, 16px)
+        }
+
+        .guide-tag {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--red);
+            font-weight: 500;
+            margin-bottom: 5px
+        }
+
+        .guide-title {
+            font-size: clamp(12px, 1.8vw, 14px);
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.4;
+            margin-bottom: 5px
+        }
+
+        .guide-meta {
+            font-size: 11px;
+            color: var(--gray-400)
+        }
+
+        .guide-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 18, 16, .9);
+            opacity: 0;
+            transition: opacity .3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+            pointer-events: none
+        }
+
+        .guide-card:hover .guide-overlay, .guide-card:focus .guide-overlay {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+    </style>
 {% endblock %}
 
 {% block extra_js %}
-  
-<script>
-  if(window.innerWidth >= 768){
-    document.getElementById('third-story').style.display = 'block';
-  }
 
-  (function(){
-    var carousel = document.getElementById('newsCarousel');
-    var prevBtn = document.getElementById('newsPrev');
-    var nextBtn = document.getElementById('newsNext');
-    var dotsWrap = document.getElementById('newsDots');
-    var cards = carousel.querySelectorAll('.news-card');
-    var total = cards.length;
-    var current = 0;
+    <script>
+        if (window.innerWidth >= 768) {
+            document.getElementById('third-story').style.display = 'block';
+        }
 
-    function getVisible(){
-      var w = carousel.offsetWidth;
-      if(w >= 900) return 4;
-      if(w >= 540) return 2;
-      return 1;
-    }
+        (function () {
+            var carousel = document.getElementById('newsCarousel');
+            var prevBtn = document.getElementById('newsPrev');
+            var nextBtn = document.getElementById('newsNext');
+            var dotsWrap = document.getElementById('newsDots');
+            var cards = carousel.querySelectorAll('.news-card');
+            var total = cards.length;
+            var current = 0;
 
-    function buildDots(){
-      dotsWrap.innerHTML = '';
-      var pages = Math.ceil(total / getVisible());
-      for(var i=0;i<pages;i++){
-        var d = document.createElement('button');
-        d.className = 'carousel-dot' + (i===0?' active':'');
-        d.setAttribute('aria-label','Page '+(i+1));
-        d.dataset.page = i;
-        d.addEventListener('click', function(){ goTo(parseInt(this.dataset.page) * getVisible()); });
-        dotsWrap.appendChild(d);
-      }
-    }
+            function getVisible() {
+                var w = carousel.offsetWidth;
+                if (w >= 900) return 4;
+                if (w >= 540) return 2;
+                return 1;
+            }
 
-    function updateDots(){
-      var page = Math.round(current / getVisible());
-      dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d,i){ d.classList.toggle('active', i===page); });
-    }
+            function buildDots() {
+                dotsWrap.innerHTML = '';
+                var pages = Math.ceil(total / getVisible());
+                for (var i = 0; i < pages; i++) {
+                    var d = document.createElement('button');
+                    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                    d.setAttribute('aria-label', 'Page ' + (i + 1));
+                    d.dataset.page = i;
+                    d.addEventListener('click', function () {
+                        goTo(parseInt(this.dataset.page) * getVisible());
+                    });
+                    dotsWrap.appendChild(d);
+                }
+            }
 
-    function goTo(idx){
-      var vis = getVisible();
-      var max = total - vis;
-      current = Math.max(0, Math.min(idx, max));
-      var cardW = cards[0].offsetWidth + 16;
-      carousel.scrollTo({left: current * cardW, behavior:'smooth'});
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current >= max;
-      updateDots();
-    }
+            function updateDots() {
+                var page = Math.round(current / getVisible());
+                dotsWrap.querySelectorAll('.carousel-dot').forEach(function (d, i) {
+                    d.classList.toggle('active', i === page);
+                });
+            }
 
-    prevBtn.addEventListener('click', function(){ goTo(current - getVisible()); });
-    nextBtn.addEventListener('click', function(){ goTo(current + getVisible()); });
+            function goTo(idx) {
+                var vis = getVisible();
+                var max = total - vis;
+                current = Math.max(0, Math.min(idx, max));
+                var cardW = cards[0].offsetWidth + 16;
+                carousel.scrollTo({left: current * cardW, behavior: 'smooth'});
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current >= max;
+                updateDots();
+            }
 
-    carousel.addEventListener('scroll', function(){
-      var cardW = cards[0].offsetWidth + 16;
-      current = Math.round(carousel.scrollLeft / cardW);
-      var vis = getVisible();
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current >= total - vis;
-      updateDots();
-    });
+            prevBtn.addEventListener('click', function () {
+                goTo(current - getVisible());
+            });
+            nextBtn.addEventListener('click', function () {
+                goTo(current + getVisible());
+            });
 
-    window.addEventListener('resize', function(){ buildDots(); goTo(0); });
-    buildDots();
-    prevBtn.disabled = true;
-  })();
-</script>
+            carousel.addEventListener('scroll', function () {
+                var cardW = cards[0].offsetWidth + 16;
+                current = Math.round(carousel.scrollLeft / cardW);
+                var vis = getVisible();
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current >= total - vis;
+                updateDots();
+            });
+
+            window.addEventListener('resize', function () {
+                buildDots();
+                goTo(0);
+            });
+            buildDots();
+            prevBtn.disabled = true;
+        })();
+    </script>
 {% endblock %}
 
 
 {% block content %}
-<!-- PAGE HERO -->
-<div class="blog-hero">
-    <img class="blog-hero-img" src="{% static 'img/stay_informed_hero2.avif' %}" alt="">
-    {% include "common/curve3.html" %}
-  <div class="page-hero-content">
-    <span class="page-hero-tag">Stay Informed</span>
-    <h1 class="page-hero-title">Stories, news &amp; resources<br>from the field</h1>
-    <p class="page-hero-sub">Discover how employment, skills development, and community partnerships are transforming lives across the United States.</p>
-  </div>
-</div>
+    <!-- PAGE HERO -->
+    <div class="blog-hero">
+        <img class="blog-hero-img" src="{% static 'img/stay_informed_hero2.avif' %}" alt="">
+        {% include "common/curve3.html" %}
+        <div class="page-hero-content">
+            <span class="page-hero-tag">Stay Informed</span>
+            <h1 class="page-hero-title">Stories, news &amp; resources<br>from the field</h1>
+            <p class="page-hero-sub">Discover how employment, skills development, and community partnerships are
+                transforming lives across the United States.</p>
+        </div>
+    </div>
 
-<!-- ── FEATURED STORIES ── -->
-<div class="section-wrap white">
-  <div class="section-head">
-    <div>
-      <div class="section-tag">Latest stories</div>
-      <h2 class="section-h2">From the good feed</h2>
-    </div>
-    <a class="btn-learn-more" href="#">Learn more →</a>
-  </div>
-  <p class="section-desc">Long reads, success stories, workforce insights, and practical resources from the individuals, employers, and communities Torvu serves across the United States.</p>
+    <!-- ── FEATURED STORIES ── -->
+    {% if feel_good_posts %}
+        <div class="section-wrap white">
+            <div class="section-head">
+                <div>
+                    <div class="section-tag">Latest stories</div>
+                    <h2 class="section-h2">From the good feed</h2>
+                </div>
+                <a class="btn-learn-more" href="#">Learn more →</a>
+            </div>
+            <p class="section-desc">Long reads, success stories, workforce insights, and practical resources from the
+                individuals, employers, and communities Torvu serves across the United States.</p>
 
-  <div class="stories-hero-row">
-    <a class="story-card big-card" href="{% url 'torvu:post' feel_good_posts.0.slug %}">
-      <div class="iph g1" style="height:100%;min-height:200px">
-        <img src="{{ feel_good_posts.0.hero_image.url }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
-      </div>
-      <div class="card-base">
-        <div class="card-base-tag">{{ feel_good_posts.0.category }}</div>
-        <div class="card-base-title">{{ feel_good_posts.0.title }}</div>
-      </div>
-      <div class="card-overlay">
-        <div class="ov-tag">{{ feel_good_posts.0.category }}</div>
-        <div class="ov-title">{{ feel_good_posts.0.title }}</div>
-        <div class="ov-desc">{{ feel_good_posts.0.excerpt }}</div>
-        <span class="btn-rm">Read More →</span>
-      </div>
-    </a>
-    <div class="small-stack">
-      {% for post in feel_good_posts|slice:"1:3" %}
-      <a class="story-card" href="{% url 'torvu:post' post.slug %}" style="min-height:140px">
-        <div class="iph {% if forloop.first %}g2{% else %}g3{% endif %}" style="height:100%;min-height:140px">
-          <img src="{{ post.hero_image.url }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
-        </div>
-        <div class="card-base">
-          <div class="card-base-tag">{{ post.category }}</div>
-          <div class="card-base-title">{{ post.title }}</div>
-        </div>
-        <div class="card-overlay">
-          <div class="ov-tag">{{ post.category }}</div>
-          <div class="ov-title">{{ post.title }}</div>
-          <div class="ov-desc">{{ post.excerpt }}</div>
-          <span class="btn-rm">Read More →</span>
-        </div>
-      </a>
-      {% endfor %}
-    </div>
-  </div>
+            <div class="stories-hero-row">
 
-  <div class="stories-bottom-row">
-    {% for post in feel_good_posts|slice:"3:7" %}
-    <a class="story-card" href="{% url 'torvu:post' post.slug %}">
-      <div class="iph {% if forloop.counter0 == 0 %}g4{% elif forloop.counter0 == 1 %}g5{% elif forloop.counter0 == 2 %}g6{% else %}g7{% endif %}" style="height:200px">
-        <img src="{{ post.hero_image.url }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
-      </div>
-      <div class="card-base">
-        <div class="card-base-tag">{{ post.category }}</div>
-        <div class="card-base-title">{{ post.title }}</div>
-      </div>
-      <div class="card-overlay">
-        <div class="ov-tag">{{ post.category }}</div>
-        <div class="ov-title">{{ post.title }}</div>
-        <div class="ov-desc">{{ post.excerpt }}</div>
-        <span class="btn-rm">Read More →</span>
-      </div>
-    </a>
-    {% endfor %}
-  </div>
-</div>
+                <a class="story-card big-card" href="{% url 'torvu:post' feel_good_posts.0.slug %}">
+                    <div class="iph g1" style="height:100%;min-height:200px">
+                        <img src="{{ feel_good_posts.0.hero_image.url }}" alt=""
+                             style="width:100%;height:100%;object-fit:cover;display:block">
+                    </div>
+                    <div class="card-base">
+                        <div class="card-base-tag">{{ feel_good_posts.0.category }}</div>
+                        <div class="card-base-title">{{ feel_good_posts.0.title }}</div>
+                    </div>
+                    <div class="card-overlay">
+                        <div class="ov-tag">{{ feel_good_posts.0.category }}</div>
+                        <div class="ov-title">{{ feel_good_posts.0.title }}</div>
+                        <div class="ov-desc">{{ feel_good_posts.0.excerpt }}</div>
+                        <span class="btn-rm">Read More →</span>
+                    </div>
+                </a>
+                <div class="small-stack">
+                    {% for post in feel_good_posts|slice:"1:3" %}
+                        <a class="story-card" href="{% url 'torvu:post' post.slug %}" style="min-height:140px">
+                            <div class="iph {% if forloop.first %}g2{% else %}g3{% endif %}"
+                                 style="height:100%;min-height:140px">
+                                <img src="{{ post.hero_image.url }}" alt=""
+                                     style="width:100%;height:100%;object-fit:cover;display:block">
+                            </div>
+                            <div class="card-base">
+                                <div class="card-base-tag">{{ post.category }}</div>
+                                <div class="card-base-title">{{ post.title }}</div>
+                            </div>
+                            <div class="card-overlay">
+                                <div class="ov-tag">{{ post.category }}</div>
+                                <div class="ov-title">{{ post.title }}</div>
+                                <div class="ov-desc">{{ post.excerpt }}</div>
+                                <span class="btn-rm">Read More →</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
 
-<!-- ── DARK STATS STRIP ── -->
-<div class="dark-strip">
-  <div class="ds-inner">
-    <div>
-      <div class="ds-year">2026</div>
-      <div class="ds-label">Annual Impact Report</div>
-    </div>
-    <div class="ds-stats">
-      <div>
-        <div class="ds-stat-num">100,000+</div>
-        <div class="ds-stat-desc">Individuals supported through workforce development and employment programs</div>
-      </div>
-      <div>
-        <div class="ds-stat-num">75%</div>
-        <div class="ds-stat-desc">Employment placement or career advancement rate among program participants</div>
-      </div>
-      <div>
-        <div class="ds-stat-num">2,500+</div>
-        <div class="ds-stat-desc">Employer and community partners creating pathways to opportunity</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── NEWS ── -->
-<div class="section-wrap gray">
-  <div class="section-head">
-    <div>
-      <div class="section-tag">In the press</div>
-      <h2 class="section-h2">News</h2>
-    </div>
-    <a class="btn-learn-more" href="#">Learn more →</a>
-  </div>
-  <p class="section-desc">Coverage, announcements, and press releases from Torvu and our partners around the world.</p>
-
-  <div class="news-carousel-wrap">
-    <div class="news-carousel" id="newsCarousel">
-      {% for post in news_posts %}
-      <a class="news-card" href="{% url 'torvu:post' post.slug %}">
-        {% if post.hero_image %}
-          <img class="iph news-card-img" src="{{ post.hero_image.url }}" alt="{{ post.hero_alt|default:post.title }}">
-        {% else %}
-          <div class="iph g1 news-card-img"></div>
-        {% endif %}
-        <div class="news-card-body">
-          <div class="news-type">{{ post.category }}</div>
-          <h4>{{ post.title }}</h4>
-          <div class="news-date">{{ post.created_at|date:"F j, Y" }}</div>
+            <div class="stories-bottom-row">
+                {% for post in feel_good_posts|slice:"3:7" %}
+                    <a class="story-card" href="{% url 'torvu:post' post.slug %}">
+                        <div class="iph {% if forloop.counter0 == 0 %}g4{% elif forloop.counter0 == 1 %}g5{% elif forloop.counter0 == 2 %}g6{% else %}g7{% endif %}"
+                             style="height:200px">
+                            <img src="{{ post.hero_image.url }}" alt=""
+                                 style="width:100%;height:100%;object-fit:cover;display:block">
+                        </div>
+                        <div class="card-base">
+                            <div class="card-base-tag">{{ post.category }}</div>
+                            <div class="card-base-title">{{ post.title }}</div>
+                        </div>
+                        <div class="card-overlay">
+                            <div class="ov-tag">{{ post.category }}</div>
+                            <div class="ov-title">{{ post.title }}</div>
+                            <div class="ov-desc">{{ post.excerpt }}</div>
+                            <span class="btn-rm">Read More →</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
         </div>
-        <div class="news-overlay">
-          <div class="ov-tag">{{ post.category }}</div>
-          <div class="ov-title">{{ post.title }}</div>
-          <div class="ov-desc">{{ post.excerpt }}</div>
-          <span class="btn-rm">Read More →</span>
-        </div>
-      </a>
-      {% endfor %}
-    </div>
-    <div class="carousel-controls">
-      <button class="carousel-btn" id="newsPrev" aria-label="Previous" disabled>&#8592;</button>
-      <div class="carousel-dots" id="newsDots"></div>
-      <button class="carousel-btn" id="newsNext" aria-label="Next">&#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── TESTIMONIALS ── -->
-<div class="section-wrap white">
-  <div class="section-head">
-    <div>
-      <div class="section-tag">Voices from the field</div>
-      <h2 class="section-h2">Testimonials</h2>
-    </div>
-    <a class="btn-learn-more" href="#">Learn more →</a>
-  </div>
-  <p class="section-desc">Words from programme participants, community leaders, and partners — the people at the centre of the work.</p>
-
-  <div class="test-grid-top">
-    <div class="test-card dark" style="position: relative; background: linear-gradient(rgba(20,18,16,0.6), rgba(20,18,16,0.6)), url('{% static "img/testimonial6.avif" %}') center/cover no-repeat;">
-      <div class="test-qmark light">"</div>
-      <div class="test-quote light">After living in a shelter for several months, I struggled to find employers willing to give me a chance. Torvu helped me rebuild my confidence, create a resume, and prepare for interviews. Today I have a full-time job, my own apartment, and a future I can finally plan for.</div>
-      <div class="test-avatar-row">
-        <img class="test-avatar" src="{% static 'img/testimonial6.avif' %}" alt="Portrait of Marcus Johnson, a Torvu participant who found stable employment after career coaching and job-readiness support">
-        <div>
-          <div class="test-name light">Marcus Johnson</div>
-          <div class="test-role">Program Participant, Ohio</div>
-        </div>
-      </div>
-      <div class="test-card-overlay">
-        <div class="ov-tag">Housing Stability &amp; Employment</div>
-        <div class="ov-title">Marcus Johnson, Ohio</div>
-        <div class="ov-desc">Marcus joined Torvu's employment readiness program in 2025 after experiencing homelessness and secured full-time employment within four months.</div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="test-card">
-        <div class="test-qmark">"</div>
-        <div class="test-quote">As a single mother, every day felt like a choice between earning a paycheck and caring for my children. Torvu connected me with career opportunities, coaching, and resources that helped me find stable work with a schedule that supports my family.</div>
-        <div class="test-avatar-row">
-          <img class="test-avatar" src="{% static 'img/testimonial5.avif' %}" alt="Portrait of Danielle Brooks, a Torvu participant who gained stable work and family-supporting income through workforce training">
-          <div>
-            <div class="test-name">Danielle Brooks</div>
-            <div class="test-role">Program Participant, Georgia</div>
-          </div>
-        </div>
-        <div class="test-card-overlay">
-          <div class="ov-tag">Family Economic Stability</div>
-          <div class="ov-title">Danielle Brooks, Georgia</div>
-          <div class="ov-desc">Danielle completed Torvu's workforce development program and now works full-time while supporting her two children.</div>
-        </div>
-      </div>
-      <div class="test-card">
-        <div class="test-qmark">"</div>
-        <div class="test-quote">For years, my criminal record closed doors before I could even explain my story. Torvu showed me that my past didn't have to define my future. They helped me find an employer who saw my potential.</div>
-        <div class="test-avatar-row">
-          <img class="test-avatar" src="{% static 'img/testimonial3.avif' %}" alt="Portrait of James Carter, a Torvu participant who used second-chance employment support to rebuild his career after incarceration">
-          <div>
-            <div class="test-name">James Carter</div>
-            <div class="test-role">Program Participant, Michigan</div>
-          </div>
-        </div>
-        <div class="test-card-overlay">
-          <div class="ov-tag">Second-Chance Employment</div>
-          <div class="ov-title">James Carter, Michigan</div>
-          <div class="ov-desc">James entered Torvu's reentry employment initiative in 2024 and now mentors other participants preparing to rejoin the workforce.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="test-grid-bottom">
-    <div class="test-card">
-      <div class="test-qmark">"</div>
-      <div class="test-quote">When I aged out of foster care, I had no professional network and no clear direction. Torvu helped me develop workplace skills, prepare for interviews, and build a career path I never thought possible.</div>
-      <div class="test-avatar-row">
-        <img class="test-avatar" src="{% static 'img/testimonial4.avif' %}" alt="Portrait of Alyssa Turner, a young adult who found her first full-time role through Torvu's workforce guidance and career readiness program">
-        <div>
-          <div class="test-name">Alyssa Turner</div>
-          <div class="test-role">Program Participant, Illinois</div>
-        </div>
-      </div>
-      <div class="test-card-overlay">
-        <div class="ov-tag">Youth Opportunity</div>
-        <div class="ov-title">Alyssa Turner, Illinois</div>
-        <div class="ov-desc">Alyssa completed Torvu's young adult workforce program and secured her first full-time position in healthcare administration.</div>
-      </div>
-    </div>
-    <div class="test-card">
-      <div class="test-qmark">"</div>
-      <div class="test-quote">Living with a disability made the job search frustrating. Torvu helped me connect with employers who valued my abilities and supported me throughout the hiring process.</div>
-      <div class="test-avatar-row">
-        <img class="test-avatar" src="{% static 'img/testimonial2.avif' %}" alt="Portrait of Robert Evans, a Torvu participant who found inclusive employment support tailored to his disability-related needs">
-        <div>
-          <div class="test-name">Robert Evans</div>
-          <div class="test-role">Program Participant, Pennsylvania</div>
-        </div>
-      </div>
-      <div class="test-card-overlay">
-        <div class="ov-tag">Inclusive Employment</div>
-        <div class="ov-title">Robert Evans, Pennsylvania</div>
-        <div class="ov-desc">Robert participated in Torvu's disability employment support program and now works as a customer support specialist.</div>
-      </div>
-    </div>
-    <div class="test-card">
-      <div class="test-qmark">"</div>
-      <div class="test-quote">After leaving military service, I struggled to translate my experience into civilian opportunities. Torvu helped me understand my strengths and connect with employers looking for the skills veterans bring.</div>
-      <div class="test-avatar-row">
-        <img class="test-avatar" src="{% static 'img/testimonial1.avif' %}" alt="Portrait of Michael Reynolds, a veteran who used Torvu's transition support to move into a civilian career role with confidence">
-        <div>
-          <div class="test-name">Michael Reynolds</div>
-          <div class="test-role">Program Participant, North Carolina</div>
-        </div>
-      </div>
-      <div class="test-card-overlay">
-        <div class="ov-tag">Veteran Career Transition</div>
-        <div class="ov-title">Michael Reynolds, North Carolina</div>
-        <div class="ov-desc">Michael joined Torvu's veteran employment initiative and secured a project management role within six months.</div>
-      </div>
-    </div>
-      
-    
-  </div>
-</div>
-
-<!-- ── GUIDES ── -->
-<div class="section-wrap gray">
-  <div class="section-tag">Resources</div>
-  <h2 class="section-h2">Guides &amp; how-tos</h2>
-  <div class="guides-header">
-    <p class="section-desc">Practical resources for community workers, programme partners, and anyone working in development — freely available.</p>
-    <a class="btn-learn-more" href="#">Learn more →</a>
-  </div>
-
-  <div class="guides-top-row">
-    {% for guide in guides %}
-    <a class="news-card" href="{% url 'torvu:post' guide.slug %}">
-        {% if guide.hero_image %}
-          <img class="iph news-card-img" src="{{ guide.hero_image.url }}" alt="{{ guide.hero_alt|default:guide.title }}">
-        {% else %}
-          <div class="iph g1 news-card-img"></div>
-        {% endif %}
-        <div class="news-card-body">
-          <div class="news-type">{{ guide.category }}</div>
-          <h4>{{ guide.title }}</h4>
-          <div class="news-date">{{ guide.created_at|date:"F j, Y" }}</div>
-        </div>
-        <div class="news-overlay">
-          <div class="ov-tag">{{ guide.category }}</div>
-          <div class="ov-title">{{ guide.title }}</div>
-          <div class="ov-desc">{{ guide.excerpt }}</div>
-          <span class="btn-rm">Read More →</span>
-        </div>
-      </a>
-    {% endfor %}
-    
-  </div>
-</div>
+    {% endif %}
 
 
-{% include 'common/contact.html' %}
+    <!-- ── DARK STATS STRIP ── -->
+    <div class="dark-strip">
+        <div class="ds-inner">
+            <div>
+                <div class="ds-year">2026</div>
+                <div class="ds-label">Annual Impact Report</div>
+            </div>
+            <div class="ds-stats">
+                <div>
+                    <div class="ds-stat-num">100,000+</div>
+                    <div class="ds-stat-desc">Individuals supported through workforce development and employment
+                        programs
+                    </div>
+                </div>
+                <div>
+                    <div class="ds-stat-num">75%</div>
+                    <div class="ds-stat-desc">Employment placement or career advancement rate among program
+                        participants
+                    </div>
+                </div>
+                <div>
+                    <div class="ds-stat-num">2,500+</div>
+                    <div class="ds-stat-desc">Employer and community partners creating pathways to opportunity</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── NEWS ── -->
+    <div class="section-wrap gray">
+        <div class="section-head">
+            <div>
+                <div class="section-tag">In the press</div>
+                <h2 class="section-h2">News</h2>
+            </div>
+            <a class="btn-learn-more" href="#">Learn more →</a>
+        </div>
+        <p class="section-desc">Coverage, announcements, and press releases from Torvu and our partners around the
+            world.</p>
+
+        <div class="news-carousel-wrap">
+            <div class="news-carousel" id="newsCarousel">
+                {% for post in news_posts %}
+                    <a class="news-card" href="{% url 'torvu:post' post.slug %}">
+                        {% if post.hero_image %}
+                            <img class="iph news-card-img" src="{{ post.hero_image.url }}"
+                                 alt="{{ post.hero_alt|default:post.title }}">
+                        {% else %}
+                            <div class="iph g1 news-card-img"></div>
+                        {% endif %}
+                        <div class="news-card-body">
+                            <div class="news-type">{{ post.category }}</div>
+                            <h4>{{ post.title }}</h4>
+                            <div class="news-date">{{ post.created_at|date:"F j, Y" }}</div>
+                        </div>
+                        <div class="news-overlay">
+                            <div class="ov-tag">{{ post.category }}</div>
+                            <div class="ov-title">{{ post.title }}</div>
+                            <div class="ov-desc">{{ post.excerpt }}</div>
+                            <span class="btn-rm">Read More →</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="newsPrev" aria-label="Previous" disabled>&#8592;</button>
+                <div class="carousel-dots" id="newsDots"></div>
+                <button class="carousel-btn" id="newsNext" aria-label="Next">&#8594;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── TESTIMONIALS ── -->
+    <div class="section-wrap white">
+        <div class="section-head">
+            <div>
+                <div class="section-tag">Voices from the field</div>
+                <h2 class="section-h2">Testimonials</h2>
+            </div>
+            <a class="btn-learn-more" href="#">Learn more →</a>
+        </div>
+        <p class="section-desc">Words from programme participants, community leaders, and partners — the people at the
+            centre of the work.</p>
+
+        <div class="test-grid-top">
+            <div class="test-card dark"
+                 style="position: relative; background: linear-gradient(rgba(20,18,16,0.6), rgba(20,18,16,0.6)), url('{% static "img/testimonial6.avif" %}') center/cover no-repeat;">
+                <div class="test-qmark light">"</div>
+                <div class="test-quote light">After living in a shelter for several months, I struggled to find
+                    employers willing to give me a chance. Torvu helped me rebuild my confidence, create a resume, and
+                    prepare for interviews. Today I have a full-time job, my own apartment, and a future I can finally
+                    plan for.
+                </div>
+                <div class="test-avatar-row">
+                    <img class="test-avatar" src="{% static 'img/testimonial6.avif' %}"
+                         alt="Portrait of Marcus Johnson, a Torvu participant who found stable employment after career coaching and job-readiness support">
+                    <div>
+                        <div class="test-name light">Marcus Johnson</div>
+                        <div class="test-role">Program Participant, Ohio</div>
+                    </div>
+                </div>
+                <div class="test-card-overlay">
+                    <div class="ov-tag">Housing Stability &amp; Employment</div>
+                    <div class="ov-title">Marcus Johnson, Ohio</div>
+                    <div class="ov-desc">Marcus joined Torvu's employment readiness program in 2025 after experiencing
+                        homelessness and secured full-time employment within four months.
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+                <div class="test-card">
+                    <div class="test-qmark">"</div>
+                    <div class="test-quote">As a single mother, every day felt like a choice between earning a paycheck
+                        and caring for my children. Torvu connected me with career opportunities, coaching, and
+                        resources that helped me find stable work with a schedule that supports my family.
+                    </div>
+                    <div class="test-avatar-row">
+                        <img class="test-avatar" src="{% static 'img/testimonial5.avif' %}"
+                             alt="Portrait of Danielle Brooks, a Torvu participant who gained stable work and family-supporting income through workforce training">
+                        <div>
+                            <div class="test-name">Danielle Brooks</div>
+                            <div class="test-role">Program Participant, Georgia</div>
+                        </div>
+                    </div>
+                    <div class="test-card-overlay">
+                        <div class="ov-tag">Family Economic Stability</div>
+                        <div class="ov-title">Danielle Brooks, Georgia</div>
+                        <div class="ov-desc">Danielle completed Torvu's workforce development program and now works
+                            full-time while supporting her two children.
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="test-qmark">"</div>
+                    <div class="test-quote">For years, my criminal record closed doors before I could even explain my
+                        story. Torvu showed me that my past didn't have to define my future. They helped me find an
+                        employer who saw my potential.
+                    </div>
+                    <div class="test-avatar-row">
+                        <img class="test-avatar" src="{% static 'img/testimonial3.avif' %}"
+                             alt="Portrait of James Carter, a Torvu participant who used second-chance employment support to rebuild his career after incarceration">
+                        <div>
+                            <div class="test-name">James Carter</div>
+                            <div class="test-role">Program Participant, Michigan</div>
+                        </div>
+                    </div>
+                    <div class="test-card-overlay">
+                        <div class="ov-tag">Second-Chance Employment</div>
+                        <div class="ov-title">James Carter, Michigan</div>
+                        <div class="ov-desc">James entered Torvu's reentry employment initiative in 2024 and now mentors
+                            other participants preparing to rejoin the workforce.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-grid-bottom">
+            <div class="test-card">
+                <div class="test-qmark">"</div>
+                <div class="test-quote">When I aged out of foster care, I had no professional network and no clear
+                    direction. Torvu helped me develop workplace skills, prepare for interviews, and build a career path
+                    I never thought possible.
+                </div>
+                <div class="test-avatar-row">
+                    <img class="test-avatar" src="{% static 'img/testimonial4.avif' %}"
+                         alt="Portrait of Alyssa Turner, a young adult who found her first full-time role through Torvu's workforce guidance and career readiness program">
+                    <div>
+                        <div class="test-name">Alyssa Turner</div>
+                        <div class="test-role">Program Participant, Illinois</div>
+                    </div>
+                </div>
+                <div class="test-card-overlay">
+                    <div class="ov-tag">Youth Opportunity</div>
+                    <div class="ov-title">Alyssa Turner, Illinois</div>
+                    <div class="ov-desc">Alyssa completed Torvu's young adult workforce program and secured her first
+                        full-time position in healthcare administration.
+                    </div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-qmark">"</div>
+                <div class="test-quote">Living with a disability made the job search frustrating. Torvu helped me
+                    connect with employers who valued my abilities and supported me throughout the hiring process.
+                </div>
+                <div class="test-avatar-row">
+                    <img class="test-avatar" src="{% static 'img/testimonial2.avif' %}"
+                         alt="Portrait of Robert Evans, a Torvu participant who found inclusive employment support tailored to his disability-related needs">
+                    <div>
+                        <div class="test-name">Robert Evans</div>
+                        <div class="test-role">Program Participant, Pennsylvania</div>
+                    </div>
+                </div>
+                <div class="test-card-overlay">
+                    <div class="ov-tag">Inclusive Employment</div>
+                    <div class="ov-title">Robert Evans, Pennsylvania</div>
+                    <div class="ov-desc">Robert participated in Torvu's disability employment support program and now
+                        works as a customer support specialist.
+                    </div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-qmark">"</div>
+                <div class="test-quote">After leaving military service, I struggled to translate my experience into
+                    civilian opportunities. Torvu helped me understand my strengths and connect with employers looking
+                    for the skills veterans bring.
+                </div>
+                <div class="test-avatar-row">
+                    <img class="test-avatar" src="{% static 'img/testimonial1.avif' %}"
+                         alt="Portrait of Michael Reynolds, a veteran who used Torvu's transition support to move into a civilian career role with confidence">
+                    <div>
+                        <div class="test-name">Michael Reynolds</div>
+                        <div class="test-role">Program Participant, North Carolina</div>
+                    </div>
+                </div>
+                <div class="test-card-overlay">
+                    <div class="ov-tag">Veteran Career Transition</div>
+                    <div class="ov-title">Michael Reynolds, North Carolina</div>
+                    <div class="ov-desc">Michael joined Torvu's veteran employment initiative and secured a project
+                        management role within six months.
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- ── GUIDES ── -->
+    <div class="section-wrap gray">
+        <div class="section-tag">Resources</div>
+        <h2 class="section-h2">Guides &amp; how-tos</h2>
+        <div class="guides-header">
+            <p class="section-desc">Practical resources for community workers, programme partners, and anyone working in
+                development — freely available.</p>
+            <a class="btn-learn-more" href="#">Learn more →</a>
+        </div>
+
+        <div class="guides-top-row">
+            {% for guide in guides %}
+                <a class="news-card" href="{% url 'torvu:post' guide.slug %}">
+                    {% if guide.hero_image %}
+                        <img class="iph news-card-img" src="{{ guide.hero_image.url }}"
+                             alt="{{ guide.hero_alt|default:guide.title }}">
+                    {% else %}
+                        <div class="iph g1 news-card-img"></div>
+                    {% endif %}
+                    <div class="news-card-body">
+                        <div class="news-type">{{ guide.category }}</div>
+                        <h4>{{ guide.title }}</h4>
+                        <div class="news-date">{{ guide.created_at|date:"F j, Y" }}</div>
+                    </div>
+                    <div class="news-overlay">
+                        <div class="ov-tag">{{ guide.category }}</div>
+                        <div class="ov-title">{{ guide.title }}</div>
+                        <div class="ov-desc">{{ guide.excerpt }}</div>
+                        <span class="btn-rm">Read More →</span>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+    {% include 'common/contact.html' %}
 {% endblock %}
