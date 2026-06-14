@@ -54,9 +54,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'torvu',
     # Django-SEO
-    'django.contrib.sitemaps'
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
 
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
