@@ -2,7 +2,20 @@
 {% load static %}
 
 {% block title %}Our Solutions Ecosystem – Torvu{% endblock %}
+{% block extra_head %}
+	<meta name="description" content="Torvu helps vulnerable Americans secure employment and achieve long-term independence through free career coaching, job training, employer connections, and financial empowerment services.">
+<meta name="keywords" content="workforce development, career coaching, job training, employment services, financial empowerment, nonprofit, job placement">
 
+<!-- Open Graph (for link previews on social media) -->
+<meta property="og:title" content="Our Solutions Ecosystem – Torvu">
+<meta property="og:description" content="Free career coaching, resume support, job training, and employer connections — helping people move from economic hardship to long-term independence.">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Our Solutions Ecosystem – Torvu">
+<meta name="twitter:description" content="Free career coaching, resume support, job training, and employer connections — helping people move from economic hardship to long-term independence.">
+{% endblock %}
 {% block nav_solutions_active %}active{% endblock %}
 {% block mobile_nav_solutions_active %}active{% endblock %}
 
