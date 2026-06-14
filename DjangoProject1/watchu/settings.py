@@ -26,6 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 print(f"this is the current debug value: {DEBUG}")
+print(f"from the env file: {os.getenv('DEBUG')}")
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', "http://127.0.0.1").split(",")
