@@ -131,6 +131,7 @@ class Post(models.Model):
 
     class Post_Type(models.TextChoices):
         NEWS     = 'news',     'News'
+        CTA = 'cta',  'CTA Button'
         GUIDE = 'guide', 'Guide'
         GOOD_FEED = 'good_feed', 'Good Feed'
         TESTIMONIAL = 'testimonial', 'Testimonial'
@@ -197,7 +198,6 @@ class PostBlock(models.Model):
         HEADING    = 'heading',     'Heading (h3)'
         BLOCKQUOTE = 'blockquote',  'Blockquote'
         IMAGE      = 'image',       'Image'
-        CTA        = 'cta',         'CTA Button'
         IMAGE_DUO  = 'image_duo',   'Image Duo (2-up)'
         PULL_STAT  = 'pull_stat',   'Pull Stat'
 
@@ -208,7 +208,7 @@ class PostBlock(models.Model):
     # --- PARAGRAPH / HEADING ---
     # Supports inline <strong> via a safe HTML subset; or swap for a plain
     # TextField and run a markdown renderer in the template.
-    text       = models.TextField(blank=True, help_text="Use Markdown for paragraphs, bold text, bullet lists, and simple tables.")
+    text       = models.TextField(blank=True)
 
     # --- BLOCKQUOTE ---
     quote_text = models.CharField(max_length=10000, blank=True)  # "Amara Mwalimu"
