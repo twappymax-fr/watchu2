@@ -7,4 +7,4 @@ tzdata==2026.2
 psycopg[binary]
 gunicorn
 python-dotenv
-
+markdown
