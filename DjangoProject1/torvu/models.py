@@ -115,61 +115,6 @@ class Tag(models.Model):
     name = models.CharField(max_length=60, unique=True)
     slug = models.SlugField(max_length=60, unique=True, editable=False)
 
-    class Post(models.Model):
-
-        class Post_Type(models.TextChoices):
-            NEWS = 'news', 'News'
-            GUIDE = 'guide', 'Guide'
-            GOOD_FEED = 'good_feed', 'Good Feed'
-            TESTIMONIAL = 'testimonial', 'Testimonial'
-
-        # Core identity
-        title = models.CharField(max_length=10000)
-        slug = models.SlugField(unique=True, blank=True, editable=False)
-        category = models.CharField(max_length=500)  # e.g. "Climate & Livelihoods"
-        tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
-        post_type = models.CharField(max_length=20,
-                                     choices=Post_Type.choices)  # e.g. "News", "Guide", "Good Feed", "Testimonial"
-
-        # Authorship
-        author = models.CharField(max_length=500)
-        author_role = models.CharField(max_length=500, blank=True)  # e.g. "Field Correspondent, Torvu Tanzania"
-
-        # Hero
-        hero_image = models.ImageField(upload_to='blog/heroes/', blank=True, null=True)
-        hero_alt = models.CharField(max_length=255, blank=True)
-
-        # Body — stored as an ordered list of content blocks (see PostBlock below)
-
-        # Meta / SEO
-        excerpt = models.TextField(max_length=6000, blank=True)  # used in story cards
-        read_time = models.PositiveSmallIntegerField(default=5)  # minutes
-
-        # Lifecycle
-        created_at = models.DateField(null=True, blank=True)
-
-        class Meta:
-            ordering = ['-created_at']
-
-        def save(self, *args, **kwargs):
-            if not self.slug:
-                base_slug = slugify(self.title)
-                slug = base_slug
-                counter = 1
-
-                while Post.objects.filter(slug=slug).exists():
-                    slug = f"{base_slug}-{counter}"
-                    counter += 1
-
-                self.slug = slug
-
-            super().save(*args, **kwargs)
-
-        def __str__(self):
-            return self.title
-
-        def get_absolute_url(self):
-            return f'/blog/{self.slug}/'
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -181,6 +126,61 @@ class Tag(models.Model):
         return f'/tag/{self.slug}/'
 
 
+class Post(models.Model):
+
+
+    class Post_Type(models.TextChoices):
+        NEWS     = 'news',     'News'
+        GUIDE = 'guide', 'Guide'
+        GOOD_FEED = 'good_feed', 'Good Feed'
+        TESTIMONIAL = 'testimonial', 'Testimonial'
+
+    # Core identity
+    title = models.CharField(max_length=10000)
+    slug = models.SlugField(unique=True, blank=True, editable=False)
+    category = models.CharField(max_length=500)          # e.g. "Climate & Livelihoods"
+    tags        = models.ManyToManyField(Tag, blank=True, related_name='posts')
+    post_type = models.CharField(max_length=20, choices=Post_Type.choices)  # e.g. "News", "Guide", "Good Feed", "Testimonial"
+
+    # Authorship
+    author      = models.CharField(max_length=500)
+    author_role = models.CharField(max_length=500, blank=True)  # e.g. "Field Correspondent, Torvu Tanzania"
+
+    # Hero
+    hero_image  = models.ImageField(upload_to='blog/heroes/', blank=True, null=True)
+    hero_alt    = models.CharField(max_length=255, blank=True)
+
+    # Body — stored as an ordered list of content blocks (see PostBlock below)
+
+    # Meta / SEO
+    excerpt     = models.TextField(max_length=6000, blank=True)  # used in story cards
+    read_time   = models.PositiveSmallIntegerField(default=5)   # minutes
+
+    # Lifecycle
+    created_at  = models.DateField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            while Post.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return f'/blog/{self.slug}/'
 
 
 
