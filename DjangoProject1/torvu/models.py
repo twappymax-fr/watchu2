@@ -136,15 +136,15 @@ class Post(models.Model):
         TESTIMONIAL = 'testimonial', 'Testimonial'
 
     # Core identity
-    title = models.CharField(max_length=1000)
+    title = models.CharField(max_length=10000)
     slug = models.SlugField(unique=True, blank=True, editable=False)
-    category = models.CharField(max_length=100)          # e.g. "Climate & Livelihoods"
+    category = models.CharField(max_length=500)          # e.g. "Climate & Livelihoods"
     tags        = models.ManyToManyField(Tag, blank=True, related_name='posts')
     post_type = models.CharField(max_length=20, choices=Post_Type.choices)  # e.g. "News", "Guide", "Good Feed", "Testimonial"
 
     # Authorship
-    author      = models.CharField(max_length=100)
-    author_role = models.CharField(max_length=150, blank=True)  # e.g. "Field Correspondent, Torvu Tanzania"
+    author      = models.CharField(max_length=500)
+    author_role = models.CharField(max_length=500, blank=True)  # e.g. "Field Correspondent, Torvu Tanzania"
 
     # Hero
     hero_image  = models.ImageField(upload_to='blog/heroes/', blank=True, null=True)
@@ -153,7 +153,7 @@ class Post(models.Model):
     # Body — stored as an ordered list of content blocks (see PostBlock below)
 
     # Meta / SEO
-    excerpt     = models.TextField(max_length=600, blank=True)  # used in story cards
+    excerpt     = models.TextField(max_length=6000, blank=True)  # used in story cards
     read_time   = models.PositiveSmallIntegerField(default=5)   # minutes
 
     # Lifecycle
@@ -202,7 +202,7 @@ class PostBlock(models.Model):
 
     post       = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='blocks')
     order      = models.PositiveSmallIntegerField()
-    block_type = models.CharField(max_length=20, choices=BlockType.choices)
+    block_type = models.CharField(max_length=2000, choices=BlockType.choices)
 
     # --- PARAGRAPH / HEADING ---
     # Supports inline <strong> via a safe HTML subset; or swap for a plain
@@ -210,25 +210,25 @@ class PostBlock(models.Model):
     text       = models.TextField(blank=True)
 
     # --- BLOCKQUOTE ---
-    quote_text = models.CharField(max_length=100, blank=True)  # "Amara Mwalimu"
-    quote_attribution = models.CharField(max_length=150, blank=True)
-    quote_attributor_role = models.CharField(max_length=150, blank=True)
+    quote_text = models.CharField(max_length=10000, blank=True)  # "Amara Mwalimu"
+    quote_attribution = models.CharField(max_length=15000, blank=True)
+    quote_attributor_role = models.CharField(max_length=15000, blank=True)
 
     # --- IMAGE (single) ---
     image      = models.ImageField(upload_to='blog/blocks/', blank=True, null=True)
-    image_alt  = models.CharField(max_length=255, blank=True)
-    caption    = models.CharField(max_length=400, blank=True)
+    image_alt  = models.CharField(max_length=5050, blank=True)
+    caption    = models.CharField(max_length=4000, blank=True)
 
     # --- IMAGE DUO ---
     image_left       = models.ImageField(upload_to='blog/blocks/', blank=True, null=True)
-    image_left_alt   = models.CharField(max_length=255, blank=True)
+    image_left_alt   = models.CharField(max_length=25500, blank=True)
     image_right      = models.ImageField(upload_to='blog/blocks/', blank=True, null=True)
-    image_right_alt  = models.CharField(max_length=255, blank=True)
-    duo_caption      = models.CharField(max_length=400, blank=True)
+    image_right_alt  = models.CharField(max_length=25500, blank=True)
+    duo_caption      = models.CharField(max_length=40000, blank=True)
 
     # --- PULL STAT ---
-    stat_number  = models.CharField(max_length=30, blank=True)   # e.g. "3×", "41%"
-    stat_heading = models.CharField(max_length=200, blank=True)
+    stat_number  = models.CharField(max_length=30000, blank=True)   # e.g. "3×", "41%"
+    stat_heading = models.CharField(max_length=20000, blank=True)
     stat_body    = models.TextField(blank=True)
 
     class Meta:
