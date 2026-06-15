@@ -137,7 +137,7 @@ class Post(models.Model):
 
     # Core identity
     title = models.CharField(max_length=10000)
-    slug = models.SlugField(unique=True, blank=True, editable=False)
+    slug = models.SlugField(unique=True, blank=True, editable=False, max_length=10000)
     category = models.CharField(max_length=500)          # e.g. "Climate & Livelihoods"
     tags        = models.ManyToManyField(Tag, blank=True, related_name='posts')
     post_type = models.CharField(max_length=20, choices=Post_Type.choices)  # e.g. "News", "Guide", "Good Feed", "Testimonial"
