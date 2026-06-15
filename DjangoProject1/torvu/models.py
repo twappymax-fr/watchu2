@@ -197,6 +197,7 @@ class PostBlock(models.Model):
         PARAGRAPH  = 'paragraph',   'Paragraph'
         HEADING    = 'heading',     'Heading (h3)'
         BLOCKQUOTE = 'blockquote',  'Blockquote'
+        CTA        = 'cta',         'CTA Button'
         IMAGE      = 'image',       'Image'
         IMAGE_DUO  = 'image_duo',   'Image Duo (2-up)'
         PULL_STAT  = 'pull_stat',   'Pull Stat'
