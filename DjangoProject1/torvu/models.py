@@ -197,6 +197,7 @@ class PostBlock(models.Model):
         HEADING    = 'heading',     'Heading (h3)'
         BLOCKQUOTE = 'blockquote',  'Blockquote'
         IMAGE      = 'image',       'Image'
+        CTA        = 'cta',         'CTA Button'
         IMAGE_DUO  = 'image_duo',   'Image Duo (2-up)'
         PULL_STAT  = 'pull_stat',   'Pull Stat'
 
@@ -207,12 +208,20 @@ class PostBlock(models.Model):
     # --- PARAGRAPH / HEADING ---
     # Supports inline <strong> via a safe HTML subset; or swap for a plain
     # TextField and run a markdown renderer in the template.
-    text       = models.TextField(blank=True)
+    text       = models.TextField(blank=True, help_text="Use Markdown for paragraphs, bold text, bullet lists, and simple tables.")
 
     # --- BLOCKQUOTE ---
     quote_text = models.CharField(max_length=10000, blank=True)  # "Amara Mwalimu"
     quote_attribution = models.CharField(max_length=15000, blank=True)
     quote_attributor_role = models.CharField(max_length=15000, blank=True)
+
+    # --- CTA BUTTON ---
+    cta_label = models.CharField(max_length=100, blank=True)
+    cta_url = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Use a named Django URL like 'torvu:home' or a full path/URL.",
+    )
 
     # --- IMAGE (single) ---
     image      = models.ImageField(upload_to='blog/blocks/', blank=True, null=True)
