@@ -131,7 +131,6 @@ class Post(models.Model):
 
     class Post_Type(models.TextChoices):
         NEWS     = 'news',     'News'
-        CTA = 'cta',  'CTA Button'
         GUIDE = 'guide', 'Guide'
         GOOD_FEED = 'good_feed', 'Good Feed'
         TESTIMONIAL = 'testimonial', 'Testimonial'
@@ -217,12 +216,14 @@ class PostBlock(models.Model):
     quote_attributor_role = models.CharField(max_length=15000, blank=True)
 
     # --- CTA BUTTON ---
-    cta_label = models.CharField(max_length=100, blank=True)
     cta_url = models.CharField(
         max_length=255,
         blank=True,
         help_text="Use a named Django URL like 'torvu:home' or a full path/URL.",
     )
+
+    cta_label = models.CharField(max_length=100, blank=True, editable=True)
+
 
     # --- IMAGE (single) ---
     image      = models.ImageField(upload_to='blog/blocks/', blank=True, null=True)
