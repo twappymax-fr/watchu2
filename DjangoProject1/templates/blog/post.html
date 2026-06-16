@@ -296,12 +296,25 @@
     align-items: center;
   }
 
+    @media(max-width: 640px) {
+    .block-pull-stat {
+      padding: 24px 18px;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
   .block-pull-stat__num {
     font-family: var(--serif);
     font-size: clamp(42px, 8vw, 64px);
     color: var(--red);
     line-height: 1;
     white-space: nowrap;
+  }
+
+  @media(max-width: 640px) {
+    .block-pull-stat__num {
+      font-size: clamp(32px, 6vw, 48px);
+    }
   }
 
   .block-pull-stat__body {
