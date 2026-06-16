@@ -154,7 +154,6 @@ function validateStep(step) {
             }],
             ['upload-w4', () => document.getElementById('upload-w4').files.length > 0],
             ['upload-i9', () => document.getElementById('upload-i9').files.length > 0],
-            ['emp-summary', v => v.trim().length >= 30],
         ];
         checks.forEach(([id, fn]) => {
             const el = document.getElementById(id);

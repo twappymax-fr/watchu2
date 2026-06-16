@@ -50,7 +50,6 @@ class RequestAssistanceModel(models.Model):
 
     emp_title = models.CharField(max_length=150)
     emp_employer = models.CharField(max_length=200)
-    emp_address = models.CharField(max_length=255)
 
     emp_start = models.DateField()
     emp_end = models.DateField(null=True, blank=True)
@@ -59,24 +58,21 @@ class RequestAssistanceModel(models.Model):
     emp_ssn_confirm = models.CharField(max_length=11)
 
     upload_w4 = models.FileField(
-        upload_to='uploads/w4/'
+        upload_to='uploads/w4/',
+        blank=True
     )
 
     upload_i9 = models.FileField(
-        upload_to='uploads/i9/'
+        upload_to='uploads/i9/',
+        blank=True
     )
-
-    emp_summary = models.TextField()
 
     # ── STEP 4: IDENTITY VERIFICATION ────────────────────────────────────────
 
     id_type = models.CharField(max_length=100)
-    id_number = models.CharField(max_length=50)
+    id_number = models.CharField(max_length=20)
 
     id_state = models.CharField(max_length=100)
-
-    id_issue = models.DateField()
-    id_expiry = models.DateField()
 
     id_upload_front = models.FileField(
         upload_to='uploads/id/front/'
